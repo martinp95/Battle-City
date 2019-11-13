@@ -32,6 +32,7 @@ class Jugador extends Modelo {
         if ( this.tiempoDisparo == 0) {
             // reiniciar Cadencia
             this.tiempoDisparo = this.cadenciaDisparo;
+            reproducirEfecto(efectos.disparo);
             return new DisparoJugador(this.x, this.y);
         } else {
             return null;

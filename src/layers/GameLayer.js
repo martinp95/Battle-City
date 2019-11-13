@@ -6,6 +6,7 @@ class GameLayer extends Layer {
     }
 
     iniciar() {
+        reproducirMusica();
         this.jugador = new Jugador(50, 50);
         this.fondo = new Fondo(imagenes.fondo,480*0.5,320*0.5);
 
@@ -40,7 +41,7 @@ class GameLayer extends Layer {
                 if (this.disparosJugador[i] != null &&
                     this.enemigos[j] != null &&
                     this.disparosJugador[i].colisiona(this.enemigos[j])) {
-
+                    reproducirEfecto(efectos.explosion);
                     this.disparosJugador.splice(i, 1);
                     i = i-1;
                     this.enemigos.splice(j, 1);
