@@ -19,6 +19,16 @@ class GameLayer extends Layer {
     }
 
     actualizar (){
+        console.log("disparosJugador: "+this.disparosJugador.length);
+        // Eliminar disparos fuera de pantalla
+        for (var i=0; i < this.disparosJugador.length; i++){
+            if ( this.disparosJugador[i] != null &&
+                !this.disparosJugador[i].estaEnPantalla()){
+
+                this.disparosJugador.splice(i, 1);
+            }
+        }
+
         this.jugador.actualizar();
         for (var i=0; i < this.enemigos.length; i++){
             this.enemigos[i].actualizar();
@@ -46,6 +56,25 @@ class GameLayer extends Layer {
                     i = i-1;
                     this.enemigos.splice(j, 1);
                     j = j-1;
+                }
+            }
+        }
+
+        // colisiones, disparoEnemigo - Jugador
+        for (var i = 0; i < this.disparosEnemigo.length; i++){
+            if(this.disparosEnemigo[i].colisiona(this.jugador)){
+                this.iniciar();
+            }
+        }
+
+        // colisiones disparoEnemigo - disparoJugador
+        for (var i = 0; i < this.disparosEnemigo.length; i++){
+            for (var j = 0; i < this.disparosJugador.length; j++){
+                if(this.disparosEnemigo[i].colisiona(this.disparosJugador[j])){
+                    this.disparosJugador.splice(j,1);
+                    j = j-1;
+                    this.disparosEnemigo.splice(i, 1);
+                    i = i-1;
                 }
             }
         }
@@ -83,7 +112,6 @@ class GameLayer extends Layer {
         } else {
             this.jugador.moverX(0);
         }
-
         // Eje Y
         if ( controles.moverY > 0 ){
             this.jugador.moverY(-1);

@@ -7,7 +7,7 @@ class Enemigo extends Modelo {
         this.vx = 1;
 
         // Disparo
-        this.cadenciaDisparo = 15;
+        this.cadenciaDisparo = 60;
         this.tiempoDisparo = 0;
     }
 
