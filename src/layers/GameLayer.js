@@ -67,7 +67,7 @@ class GameLayer extends Layer {
             }
         }
 
-        // colisiones disparoEnemigo - disparoJugador
+       /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
         for (var i = 0; i < this.disparosEnemigo.length; i++){
             for (var j = 0; i < this.disparosJugador.length; j++){
                 if(this.disparosEnemigo[i].colisiona(this.disparosJugador[j])){
@@ -77,7 +77,7 @@ class GameLayer extends Layer {
                     i = i-1;
                 }
             }
-        }
+        }*/
     }
 
     dibujar (){
