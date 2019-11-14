@@ -8,13 +8,13 @@ class Jugador extends Modelo {
 
         // Animaciones
         this.aIdleAbajo = new Animacion(imagenes.jugador_idle_abajo,
-            this.ancho, this.alto, 4, 2);
+            this.ancho, this.alto, 3, 2);
         this.aIdleArriba = new Animacion(imagenes.jugador_idle_arriba,
-            this.ancho, this.alto, 4, 2);
+            this.ancho, this.alto, 3, 2);
         this.aIdleIzquierda = new Animacion(imagenes.jugador_idle_izquierda,
-            this.ancho, this.alto, 4, 2);
+            this.ancho, this.alto, 3, 2);
         this.aIdleDerecha = new Animacion(imagenes.jugador_idle_derecha,
-            this.ancho, this.alto, 4, 2);
+            this.ancho, this.alto, 3, 2);
         this.animacion = this.aIdleArriba;
 
         // Disparo
@@ -80,7 +80,19 @@ class Jugador extends Modelo {
             // reiniciar Cadencia
             this.tiempoDisparo = this.cadenciaDisparo;
             reproducirEfecto(efectos.disparo);
-            return new DisparoJugador(this.x, this.y);
+            var disparo = null;
+            if(this.orientacion == orientaciones.izquierda){
+                disparo = new DisparoJugador(imagenes.disparo_jugador_izquierda, this.x, this.y)
+                disparo.vx = disparo.vx * -1;
+            }else if (this.orientacion == orientaciones.derecha){
+                disparo = new DisparoJugador(imagenes.disparo_jugador_derecha, this.x, this.y);
+            }else if( this.orientacion == orientaciones.arriba){
+                disparo = new DisparoJugador(imagenes.disparo_jugador_arriba, this.x, this.y,true);
+                disparo.vy = disparo.vy * -1;
+            }else if (this.orientacion == orientaciones.abajo){
+                disparo = new DisparoJugador(imagenes.disparo_jugador_abajo, this.x, this.y,true);
+            }
+            return disparo;
         } else {
             return null;
         }
