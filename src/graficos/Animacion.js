@@ -1,6 +1,11 @@
 class Animacion {
 
-    constructor(imagenSrc, modeloAncho, modeloAlto, velocidadRefresco, framesTotales) {
+    constructor(imagenSrc, modeloAncho, modeloAlto, velocidadRefresco,
+                framesTotales, callback) {
+
+        // Para animaciones finitas
+        this.callback = callback;
+
         this.imagen = new Image();
         this.imagen.src = imagenSrc;
 
@@ -28,10 +33,16 @@ class Animacion {
             this.ultimaActualizacion = 0;
             // actualizar el frame
             this.frameActual++;
-            // Si llega al último frame evuelve al primero
+            // Si llega al último frame vuelve al primero
             if (this.frameActual >= this.framesTotales) {
-                // reiniciar, es infinita
-                this.frameActual = 0;
+                if ( this.callback != null){
+                    // avisar de que acabo
+                    this.frameActual = 0;
+                    this.callback();
+                } else {
+                    // reiniciar, es infinita
+                    this.frameActual = 0;
+                }
             }
         }
         // actualizar el rectangulo (siguiente frame)
