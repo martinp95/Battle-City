@@ -7,15 +7,14 @@ class GameLayer extends Layer {
 
     iniciar() {
         reproducirMusica();
-        this.jugador = new Jugador(50, 50);
+        this.bloques = [];
         this.fondo = new Fondo(imagenes.fondo,480*0.5,320*0.5);
 
         this.disparosJugador = [];
         this.disparosEnemigo = [];
 
         this.enemigos = [];
-        this.enemigos.push(new Enemigo(300,50));
-        this.enemigos.push(new Enemigo(350,200));
+        this.cargarMapa("res/0.txt");
     }
 
     actualizar (){
@@ -80,8 +79,52 @@ class GameLayer extends Layer {
         }*/
     }
 
+    cargarMapa(ruta){
+        var fichero = new XMLHttpRequest();
+        fichero.open("GET", ruta, false);
+
+        fichero.onreadystatechange = function () {
+            var texto = fichero.responseText;
+            var lineas = texto.split('\n');
+            for (var i = 0; i < lineas.length; i++){
+                var linea = lineas[i];
+                for (var j = 0; j < linea.length; j++){
+                    var simbolo = linea[j];
+                    var x = 40/2 + j * 40; // x central
+                    var y = 32 + i * 32; // y de abajo
+                    this.cargarObjetoMapa(simbolo,x,y);
+                }
+            }
+        }.bind(this);
+
+        fichero.send(null);
+    }
+
+    cargarObjetoMapa(simbolo, x, y){
+        switch(simbolo) {
+            case "E":
+                var enemigo = new Enemigo(x,y);
+                enemigo.y = enemigo.y - enemigo.alto/2;
+                this.enemigos.push(enemigo);
+                break;
+            case "1":
+                this.jugador = new Jugador(x, y);
+                this.jugador.y = this.jugador.y - this.jugador.alto/2;
+                break;
+            case "#":
+                var bloque = new Bloque(imagenes.bloque, x, y);
+                bloque.y = bloque.y - bloque.alto/2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(bloque);
+                break;
+        }
+    }
+
     dibujar (){
         this.fondo.dibujar();
+        for (var i=0; i < this.bloques.length; i++){
+            this.bloques[i].dibujar();
+        }
         for (var i=0; i < this.disparosJugador.length; i++) {
             this.disparosJugador[i].dibujar();
         }

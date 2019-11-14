@@ -14,6 +14,7 @@ var imagenes = {
     jugador_idle_arriba : "res/jugador_idle_arriba.png",
     jugador_idle_izquierda : "res/jugador_idle_izquierda.png",
     jugador_idle_derecha : "res/jugador_idle_derecha.png",
+    bloque : "res/wall_brick.png",
 };
 
 var rutasImagenes = Object.values(imagenes);
