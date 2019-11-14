@@ -1,7 +1,7 @@
 class DisparoEnemigo extends Modelo {
 
-    constructor(x, y) {
-        super(imagenes.disparo_jugador, x, y)
+    constructor(imagen, x, y) {
+        super(imagen, x, y);
         this.vx = 9;
     }
 

@@ -1,7 +1,7 @@
 class Jugador extends Modelo {
 
     constructor(x, y) {
-        super(imagenes.jugador, x, y);
+        super(imagenes.jugador_parado_abajo, x, y);
         this.orientacion = orientaciones.arriba;
         this.vx = 0; // velocidadX
         this.vy = 0; // velocidadY
@@ -15,6 +15,14 @@ class Jugador extends Modelo {
             this.ancho, this.alto, 3, 2);
         this.aIdleDerecha = new Animacion(imagenes.jugador_idle_derecha,
             this.ancho, this.alto, 3, 2);
+        this.aParadoAbajo = new Animacion(imagenes.jugador_parado_abajo,
+            this.ancho, this.alto, 1, 1);
+        this.aParadoArriba = new Animacion(imagenes.jugador_parado_arriba,
+            this.ancho, this.alto, 1, 1);
+        this.aParadoDerecha = new Animacion(imagenes.jugador_parado_derecha,
+            this.ancho, this.alto, 1, 1);
+        this.aParadoIzquierda = new Animacion(imagenes.jugador_parado_izquierda,
+            this.ancho, this.alto, 1, 1);
         this.animacion = this.aIdleArriba;
 
         // Disparo
@@ -54,6 +62,20 @@ class Jugador extends Modelo {
             }
             if (this.orientacion == orientaciones.arriba){
                 this.animacion = this.aIdleArriba;
+            }
+        }
+        if (this.vx == 0  && this.vy == 0){
+            if (this.orientacion == orientaciones.abajo){
+                this.animacion = this.aParadoAbajo;
+            }
+            if (this.orientacion == orientaciones.arriba){
+                this.animacion = this.aParadoArriba;
+            }
+            if(this.orientacion == orientaciones.derecha){
+                this.animacion = this.aParadoDerecha;
+            }
+            if (this.orientacion == orientaciones.izquierda){
+                this.animacion = this.aParadoIzquierda;
             }
         }
 
