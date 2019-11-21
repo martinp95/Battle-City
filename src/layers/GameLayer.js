@@ -6,6 +6,8 @@ class GameLayer extends Layer {
     }
 
     iniciar() {
+        this.scrollX = 0;
+        this.scrollY = 0;
         reproducirMusica();
         this.bloques = [];
         this.fondo = new Fondo(imagenes.fondo,480*0.5,320*0.5);
@@ -120,18 +122,24 @@ class GameLayer extends Layer {
         }
     }
 
+    calcularScroll(){
+        this.scrollX = this.jugador.x - 200;
+        this.scrollY = this.jugador.y - 200;
+    }
+
     dibujar (){
+        this.calcularScroll();
         this.fondo.dibujar();
         for (var i=0; i < this.bloques.length; i++){
-            this.bloques[i].dibujar();
+            this.bloques[i].dibujar(this.scrollX, this.scrollY);
         }
         for (var i=0; i < this.disparosJugador.length; i++) {
-            this.disparosJugador[i].dibujar();
+            this.disparosJugador[i].dibujar(this.scrollX, this.scrollY);
         }
         for (var i=0; i < this.disparosEnemigo.length; i++) {
-            this.disparosEnemigo[i].dibujar();
+            this.disparosEnemigo[i].dibujar(this.scrollX, this.scrollY);
         }
-        this.jugador.dibujar();
+        this.jugador.dibujar(this.scrollX, this.scrollY);
         for (var i=0; i < this.enemigos.length; i++){
             this.enemigos[i].dibujar();
         }

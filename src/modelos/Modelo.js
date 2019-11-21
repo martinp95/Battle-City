@@ -9,10 +9,12 @@ class Modelo {
         this.alto = this.imagen.height;
     }
 
-    dibujar (){
+    dibujar (scrollX, scrollY){
+        scrollX = scrollX || 0;
+        scrollY = scrollY || 0;
         contexto.drawImage(this.imagen,
-            this.x - this.ancho /2,
-            this.y - this.alto /2);
+            this.x - this.ancho /2 - scrollX,
+            this.y - this.alto /2 - scrollY);
     }
 
     colisiona (modelo){
@@ -28,9 +30,10 @@ class Modelo {
     }
 
     estaEnPantalla (){
-        if ( this.x - this.ancho/2 <= 480 && this.x + this.ancho/2 >= 0 &&
-            this.y - this.alto/2 <= 320 &&
-            this.y + this.alto/2 >= 0 ){
+        if ( (this.x - gameLayer.scrollX) - this.ancho/2 <= 480 &&
+            (this.x - gameLayer.scrollX) + this.ancho/2 >= 0 &&
+            (this.y - gameLayer.scrollY)  - this.alto/2 <= 320 &&
+            (this.y - gameLayer.scrollY) + this.alto/2 >= 0 ){
             return true;
         }
         return false;
