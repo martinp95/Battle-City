@@ -84,9 +84,6 @@ class Jugador extends Modelo {
         if ( this.tiempoDisparo > 0 ) {
             this.tiempoDisparo--;
         }
-
-        this.x = this.x + this.vx;
-        this.y = this.y + this.vy;
     }
 
     moverX (direccion){

@@ -65,7 +65,6 @@ class Enemigo extends Modelo {
         if ( this.x + this.ancho/2 >= 480 || this.x - this.ancho/2 <= 0){
             this.vx = this.vx * -1;
         }
-        this.x = this.x + this.vx;
     }
 
     disparar(){
