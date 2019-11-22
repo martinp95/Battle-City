@@ -5,7 +5,7 @@ var imagenes = {
     jugador_parado_izquierda : "res/player_left.png",
     jugador_parado_derecha : "res/player_right.png",
     fondo : "res/fondo.png",
-    enemigo : "res/tank_basic_down.png",
+    enemigo_parado_izquierda : "res/enemigo_parado_izquierda.png",
     disparo_jugador_abajo : "res/bullet_down.png",
     disparo_jugador_arriba : "res/bullet_up.png",
     disparo_jugador_izquierda : "res/bullet_left.png",
@@ -14,6 +14,10 @@ var imagenes = {
     jugador_idle_arriba : "res/jugador_idle_arriba.png",
     jugador_idle_izquierda : "res/jugador_idle_izquierda.png",
     jugador_idle_derecha : "res/jugador_idle_derecha.png",
+    enemigo_idle_abajo : "res/enemigo_idle_abajo.png",
+    enemigo_idle_arriba : "res/enemigo_idle_arriba.png",
+    enemigo_idle_izquierda : "res/enemigo_idle_izquierda.png",
+    enemigo_idle_derecha : "res/enemigo_idle_derecha.png",
     bloque : "res/wall_brick.png",
 };
 

@@ -123,8 +123,23 @@ class GameLayer extends Layer {
     }
 
     calcularScroll(){
-        this.scrollX = this.jugador.x - 200;
-        this.scrollY = this.jugador.y - 200;
+        // limite izquierda
+        if ( this.jugador.x - this.scrollX < 480*0.4){
+            this.scrollX = this.jugador.x - 480*0.4;
+        }
+        // limite derecha
+        if ( this.jugador.x - this.scrollX > 480*0.7){
+            this.scrollX = this.jugador.x - 480*0.7;
+        }
+
+        //limite arriba
+        if(this.jugador.y - this.scrollY < 320*0.4){
+            this.scrollY = this.jugador.y - 320*0.4;
+        }
+        //limite abajo
+        if(this.jugador.y - this.scrollY > 320*0.7){
+            this.scrollY = this.jugador.y - 320*0.7;
+        }
     }
 
     dibujar (){
@@ -141,7 +156,7 @@ class GameLayer extends Layer {
         }
         this.jugador.dibujar(this.scrollX, this.scrollY);
         for (var i=0; i < this.enemigos.length; i++){
-            this.enemigos[i].dibujar();
+            this.enemigos[i].dibujar(this.scrollX, this.scrollY);
         }
     }
 
