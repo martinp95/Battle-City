@@ -141,7 +141,7 @@ class GameLayer extends Layer {
         }
         this.jugador.dibujar(this.scrollX, this.scrollY);
         for (var i=0; i < this.enemigos.length; i++){
-            this.enemigos[i].dibujar();
+            this.enemigos[i].dibujar(this.scrollX, this.scrollY);
         }
     }
 
