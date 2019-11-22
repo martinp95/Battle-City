@@ -12,10 +12,5 @@ class DisparoJugador extends Modelo {
     }
 
     actualizar (){
-        // if(this.vx != 0) {
-        //     this.x = this.x + this.vx;
-        // }else{
-        //     this.y = this.y + this.vy;
-        // }
     }
 }
