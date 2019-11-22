@@ -56,6 +56,7 @@ class GameLayer extends Layer {
             }
         }
 
+        //actualizar
         this.jugador.actualizar();
         for (var i=0; i < this.enemigos.length; i++){
             this.enemigos[i].actualizar();
@@ -66,7 +67,6 @@ class GameLayer extends Layer {
                 this.disparosEnemigo.push(nuevoDisparo);
             }
         }
-
         for (var i=0; i < this.disparosJugador.length; i++) {
             this.disparosJugador[i].actualizar();
         }
@@ -74,8 +74,9 @@ class GameLayer extends Layer {
             this.disparosEnemigo[i].actualizar();
         }
 
-        // colisiones , disparoJugador - Enemigo
+        //colisiones disparoJugador
         for (var i=0; i < this.disparosJugador.length; i++){
+            // colisiones , disparoJugador - Enemigo
             for (var j=0; j < this.enemigos.length; j++){
                 if (this.disparosJugador[i] != null &&
                     this.enemigos[j] != null &&
@@ -89,14 +90,40 @@ class GameLayer extends Layer {
                     j = j-1;
                 }
             }
+            //colisiones, disparoJugador - BloqueDestruible
+            for (var k = 0; k < this.bloquesDestruibles.length; k++) {
+                if (this.disparosJugador[i] != null
+                    && this.disparosJugador[i]
+                        .colisiona(this.bloquesDestruibles[k])) {
+                    this.espacio
+                        .eliminarCuerpoEstatico(this.bloquesDestruibles[k]);
+                    this.disparosJugador.splice(i, 1);
+                    this.bloquesDestruibles.splice(k, 1);
+                }
+            }
         }
 
-        // colisiones, disparoEnemigo - Jugador
+        // colisiones, disparoEnemigo
         for (var i = 0; i < this.disparosEnemigo.length; i++){
+            // colisiones, disparoEnemigo - Jugador
             if(this.disparosEnemigo[i].colisiona(this.jugador)){
                 this.iniciar();
             }
+            // colisiones, disparoEnemigo - BloqueDestruible
+            for (var j = 0; j < this.bloquesDestruibles.length; j++) {
+                if (this.disparosEnemigo[i] != null
+                    && this.disparosEnemigo[i]
+                        .colisiona(this.bloquesDestruibles[j])) {
+                    this.espacio
+                        .eliminarCuerpoEstatico(this.bloquesDestruibles[j]);
+                    this.disparosEnemigo.splice(i, 1);
+                    this.bloquesDestruibles.splice(j, 1);
+                }
+            }
         }
+
+
+
 
        /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
         for (var i = 0; i < this.disparosEnemigo.length; i++){
