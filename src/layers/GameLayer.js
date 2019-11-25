@@ -132,12 +132,10 @@ class GameLayer extends Layer {
         }
 
         //colision Jugador
-        for(i = 0; i< this.bloquesAgua.length; i++){
+        for(i = 0; i < this.bloquesAgua.length; i++){
             if(this.jugador.colisiona(this.bloquesAgua[i])){
-                console.log("colsiona");
-                console.log(this.jugador.vx);
-                this.jugador.vx = this.jugador.vx < 2;
-                this.jugador.vy = this.jugador.vy < 2;
+                this.jugador.slow = true;
+                this.jugador.tiempoSlow = 120;
             }
         }
 

@@ -28,6 +28,8 @@ class Jugador extends Modelo {
         // Disparo
         this.cadenciaDisparo = 15;
         this.tiempoDisparo = 0;
+        this.slow = false;
+        this.tiempoSlow = 0;
     }
 
     actualizar(){
@@ -78,20 +80,32 @@ class Jugador extends Modelo {
                 this.animacion = this.aParadoIzquierda;
             }
         }
-
-
         // Tiempo Disparo
         if ( this.tiempoDisparo > 0 ) {
             this.tiempoDisparo--;
         }
+
+        if( this.tiempoSlow > 0){
+            this.tiempoSlow--;
+        }else{
+            this.slow = false;
+        }
     }
 
     moverX (direccion){
-        this.vx = direccion * 1;
+        if(this.slow){
+            this.vx = direccion * 0.5;
+        }else {
+            this.vx = direccion * 1.5;
+        }
     }
 
     moverY (direccion){
-        this.vy = direccion * 1;
+        if(this.slow) {
+            this.vy = direccion * 0.5;
+        }else{
+            this.vy = direccion * 1.5;
+        }
     }
 
     disparar(){
@@ -120,5 +134,4 @@ class Jugador extends Modelo {
     dibujar(scrollX, scrollY) {
         this.animacion.dibujar(this.x - scrollX, this.y - scrollY);
     }
-
 }
