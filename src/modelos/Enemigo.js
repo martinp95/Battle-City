@@ -20,6 +20,10 @@ class Enemigo extends Modelo {
         // Disparo
         this.cadenciaDisparo = 60;
         this.tiempoDisparo = 0;
+
+        //IA dirección
+        this.recalculadoDireccion = 300;
+        this.tiempoRecalculadoDireccion = 0;
     }
 
     actualizar (){
@@ -57,10 +61,37 @@ class Enemigo extends Modelo {
             }
         }
 
+        if ( this.vy == 0 && this.vx == 0
+            && this.tiempoRecalculadoDireccion == 0) {
+            this.calcularIA()
+        }
+
+        // Tiempo Recalculado de dirección
+        if ( this.tiempoRecalculadoDireccion > 0 ) {
+            this.tiempoRecalculadoDireccion--;
+        }
+
         // Tiempo Disparo
         if ( this.tiempoDisparo > 0 ) {
             this.tiempoDisparo--;
         }
+    }
+
+    calcularIA(){
+        var nuevaOrientacion = Math.floor(Math.random() * 4);
+        if ( nuevaOrientacion == 0 ) {
+            this.vy = 1;
+        }
+        if ( nuevaOrientacion == 1 ){
+            this.vx = 1;
+        }
+        if ( nuevaOrientacion == 2 ) {
+            this.vy = -1;
+        }
+        if ( nuevaOrientacion == 3 ){
+            this.vx = -1;
+        }
+
     }
 
     disparar(){
