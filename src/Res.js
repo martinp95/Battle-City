@@ -18,8 +18,12 @@ var imagenes = {
     enemigo_idle_arriba : "res/enemigo_idle_arriba.png",
     enemigo_idle_izquierda : "res/enemigo_idle_izquierda.png",
     enemigo_idle_derecha : "res/enemigo_idle_derecha.png",
-    bloque_destruible: "res/wall_brick.png",
-    bloque_irrompible: "res/wall_steel.png",
+    bloque_destruible : "res/wall_brick.png",
+    bloque_irrompible : "res/wall_steel.png",
+    bloque_agua : "water.png",
+    bullet_explosion : "res/bullet_explosion.png",
+    base : "res/base.png",
+
 };
 
 var rutasImagenes = Object.values(imagenes);

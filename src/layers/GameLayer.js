@@ -101,6 +101,10 @@ class GameLayer extends Layer {
                     this.bloquesDestruibles.splice(k, 1);
                 }
             }
+            //colisiones, disparoJugador - Base
+            if(this.disparosJugador[i].colisiona(this.base)){
+                this.iniciar();
+            }
         }
 
         // colisiones, disparoEnemigo
@@ -119,6 +123,10 @@ class GameLayer extends Layer {
                     this.disparosEnemigo.splice(i, 1);
                     this.bloquesDestruibles.splice(j, 1);
                 }
+            }
+            //colisiones, disparoEnemigo - Base
+            if(this.disparosEnemigo[i].colisiona(this.base)){
+                this.iniciar();
             }
         }
 
@@ -183,9 +191,20 @@ class GameLayer extends Layer {
             case "2":
                 var bloque = new Bloque(imagenes.bloque_irrompible, x, y);
                 bloque.y = bloque.y - bloque.alto / 2;
-
                 this.bloquesIrrompibles.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            // case "3":
+            //     var bloque = new Bloque(imagenes.bloque_irrompible, x, y);
+            //     bloque.y = bloque.y - bloque.alto / 2;
+            //     this.bloquesIrrompibles.push(bloque);
+            //     this.espacio.agregarCuerpoEstatico(bloque);
+            //     break;
+            case "B":
+                this.base = new Bloque(imagenes.base, x ,y);
+                this.base.y = this.base.y - this.base.alto/2;
+                this.base.x = this.base.x - 8;
+                this.espacio.agregarCuerpoEstatico(this.base);
                 break;
         }
     }
@@ -221,6 +240,7 @@ class GameLayer extends Layer {
     dibujar() {
         this.calcularScroll();
         this.fondo.dibujar();
+        this.base.dibujar(this.scrollX, this.scrollY);
         for (var i = 0; i < this.bloquesDestruibles.length; i++) {
             this.bloquesDestruibles[i].dibujar(this.scrollX, this.scrollY);
         }
