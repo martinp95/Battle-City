@@ -20,7 +20,7 @@ var imagenes = {
     enemigo_idle_derecha : "res/enemigo_idle_derecha.png",
     bloque_destruible : "res/wall_brick.png",
     bloque_irrompible : "res/wall_steel.png",
-    bloque_agua : "water.png",
+    bloque_agua : "res/water.png",
     bullet_explosion : "res/bullet_explosion.png",
     base : "res/base.png",
 
