@@ -80,6 +80,7 @@ class Jugador extends Modelo {
         }
 
 
+
         // Tiempo Disparo
         if ( this.tiempoDisparo > 0 ) {
             this.tiempoDisparo--;
@@ -101,7 +102,7 @@ class Jugador extends Modelo {
             reproducirEfecto(efectos.disparo);
             var disparo = null;
             if(this.orientacion == orientaciones.izquierda){
-                disparo = new DisparoJugador(imagenes.disparo_jugador_izquierda, this.x, this.y)
+                disparo = new DisparoJugador(imagenes.disparo_jugador_izquierda, this.x, this.y);
                 disparo.vx = disparo.vx * -1;
             }else if (this.orientacion == orientaciones.derecha){
                 disparo = new DisparoJugador(imagenes.disparo_jugador_derecha, this.x, this.y);
