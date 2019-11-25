@@ -12,6 +12,7 @@ class GameLayer extends Layer {
         reproducirMusica();
         this.bloquesDestruibles = [];
         this.bloquesIrrompibles = [];
+        this.bloquesAgua = [];
         this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
 
         this.disparosJugador = [];
@@ -76,6 +77,10 @@ class GameLayer extends Layer {
 
         //colisiones disparoJugador
         for (var i = 0; i < this.disparosJugador.length; i++) {
+            //colisiones, disparoJugador - Base
+            if (this.disparosJugador[i].colisiona(this.base)) {
+                this.iniciar();
+            }
             // colisiones , disparoJugador - Enemigo
             for (var j = 0; j < this.enemigos.length; j++) {
                 if (this.disparosJugador[i] != null &&
@@ -101,16 +106,16 @@ class GameLayer extends Layer {
                     this.bloquesDestruibles.splice(k, 1);
                 }
             }
-            //colisiones, disparoJugador - Base
-            if(this.disparosJugador[i].colisiona(this.base)){
-                this.iniciar();
-            }
         }
 
         // colisiones, disparoEnemigo
         for (var i = 0; i < this.disparosEnemigo.length; i++) {
             // colisiones, disparoEnemigo - Jugador
             if (this.disparosEnemigo[i].colisiona(this.jugador)) {
+                this.iniciar();
+            }
+            //colisiones, disparoEnemigo - Base
+            if (this.disparosEnemigo[i].colisiona(this.base)) {
                 this.iniciar();
             }
             // colisiones, disparoEnemigo - BloqueDestruible
@@ -124,9 +129,15 @@ class GameLayer extends Layer {
                     this.bloquesDestruibles.splice(j, 1);
                 }
             }
-            //colisiones, disparoEnemigo - Base
-            if(this.disparosEnemigo[i].colisiona(this.base)){
-                this.iniciar();
+        }
+
+        //colision Jugador
+        for(i = 0; i< this.bloquesAgua.length; i++){
+            if(this.jugador.colisiona(this.bloquesAgua[i])){
+                console.log("colsiona");
+                console.log(this.jugador.vx);
+                this.jugador.vx = this.jugador.vx < 2;
+                this.jugador.vy = this.jugador.vy < 2;
             }
         }
 
@@ -194,15 +205,15 @@ class GameLayer extends Layer {
                 this.bloquesIrrompibles.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
-            // case "3":
-            //     var bloque = new Bloque(imagenes.bloque_irrompible, x, y);
-            //     bloque.y = bloque.y - bloque.alto / 2;
-            //     this.bloquesIrrompibles.push(bloque);
-            //     this.espacio.agregarCuerpoEstatico(bloque);
-            //     break;
+            case "3":
+                var bloque = new Bloque(imagenes.bloque_agua, x, y);
+                bloque.y = bloque.y - bloque.alto / 2;
+                this.bloquesAgua.push(bloque);
+                this.espacio.agregarCuerpoDinamico(bloque);
+                break;
             case "B":
-                this.base = new Bloque(imagenes.base, x ,y);
-                this.base.y = this.base.y - this.base.alto/2;
+                this.base = new Bloque(imagenes.base, x, y);
+                this.base.y = this.base.y - this.base.alto / 2;
                 this.base.x = this.base.x - 8;
                 this.espacio.agregarCuerpoEstatico(this.base);
                 break;
@@ -223,14 +234,14 @@ class GameLayer extends Layer {
             }
         }
         //limite abajo
-        if(this.jugador.y < this.altoMapa) {
+        if (this.jugador.y < this.altoMapa) {
             if (this.jugador.y - this.scrollY > 320 * 0.7) {
                 this.scrollY = Math.min(this.jugador.y - 320 * 0.7,
-                    this.altoMapa-this.altoMapa*0.823);
+                    this.altoMapa - this.altoMapa * 0.823);
             }
         }
         //limite arriba
-        if(this.jugador.y > 320 * 0.3) {
+        if (this.jugador.y > 320 * 0.3) {
             if (this.jugador.y - this.scrollY < 320 * 0.3) {
                 this.scrollY = this.jugador.y - 320 * 0.3;
             }
@@ -246,6 +257,9 @@ class GameLayer extends Layer {
         }
         for (var i = 0; i < this.bloquesIrrompibles.length; i++) {
             this.bloquesIrrompibles[i].dibujar(this.scrollX, this.scrollY);
+        }
+        for (var i = 0; i < this.bloquesAgua.length; i++) {
+            this.bloquesAgua[i].dibujar(this.scrollX, this.scrollY);
         }
         for (var i = 0; i < this.disparosJugador.length; i++) {
             this.disparosJugador[i].dibujar(this.scrollX, this.scrollY);
