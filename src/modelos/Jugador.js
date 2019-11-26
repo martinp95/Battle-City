@@ -33,6 +33,10 @@ class Jugador extends Modelo {
         this.tiempoSlow = 0;
         //vidas
         this.vidas = 4;
+        //minas
+        this.minas = 0;
+        this.tiempoMina = 0;
+        this.cadenciaMina = 10;
     }
 
     actualizar(){
