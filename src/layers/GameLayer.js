@@ -24,7 +24,6 @@ class GameLayer extends Layer {
 
     actualizar() {
         this.espacio.actualizar();
-        console.log("disparosJugador: " + this.disparosJugador.length);
 
         // Eliminar disparosJugador sin velocidad
         for (var i = 0; i < this.disparosJugador.length; i++) {
@@ -110,13 +109,17 @@ class GameLayer extends Layer {
 
         // colisiones, disparoEnemigo
         for (var i = 0; i < this.disparosEnemigo.length; i++) {
-            // colisiones, disparoEnemigo - Jugador
-            if (this.disparosEnemigo[i].colisiona(this.jugador)) {
-                this.iniciar();
-            }
             //colisiones, disparoEnemigo - Base
             if (this.disparosEnemigo[i].colisiona(this.base)) {
                 this.iniciar();
+            }
+            // colisiones, disparoEnemigo - Jugador
+            if (this.disparosEnemigo[i].colisiona(this.jugador)) {
+                this.jugador.vidas--;
+                this.disparosEnemigo.splice(i, 1);
+                if(this.jugador.vidas == 0){
+                    this.iniciar();
+                }
             }
             // colisiones, disparoEnemigo - BloqueDestruible
             for (var j = 0; j < this.bloquesDestruibles.length; j++) {

@@ -28,8 +28,11 @@ class Jugador extends Modelo {
         // Disparo
         this.cadenciaDisparo = 15;
         this.tiempoDisparo = 0;
+        //slow
         this.slow = false;
         this.tiempoSlow = 0;
+        //vidas
+        this.vidas = 4;
     }
 
     actualizar(){
