@@ -25,6 +25,7 @@ var imagenes = {
     base : "res/base.png",
     consumible_vida_extra : "res/consumible_vida_extra.png",
     consumible_mina : "res/consumible_mina.png",
+    mina : "res/mina.png",
 };
 
 var rutasImagenes = Object.values(imagenes);

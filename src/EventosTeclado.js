@@ -24,6 +24,9 @@ function onKeyDown( event) {
             case 37:
                 controles.moverX = -1;
                 break;
+            case 77:
+                controles.plantarMina = true;
+                break;
         }
     }
 }
@@ -57,6 +60,9 @@ function onKeyUp( event) {
             if ( controles.moverX == -1 ){
                 controles.moverX = 0;
             }
+            break;
+        case 77:
+            controles.plantarMina = false;
             break;
     }
 }
