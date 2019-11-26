@@ -13,6 +13,7 @@ class GameLayer extends Layer {
         this.bloquesDestruibles = [];
         this.bloquesIrrompibles = [];
         this.bloquesAgua = [];
+        this.consumibleVidaExtra = [];
         this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
 
         this.disparosJugador = [];
@@ -24,6 +25,20 @@ class GameLayer extends Layer {
 
     actualizar() {
         this.espacio.actualizar();
+
+        //generar consumibleVidaExtra
+        if(this.iteracionesCrearConsumebleVida == null){
+            this.iteracionesCrearConsumebleVida = 300;
+        }
+        this.iteracionesCrearConsumebleVida--;
+        if(this.iteracionesCrearConsumebleVida < 0){
+            var rX = Math.random() * (600 - 60) + 60;
+            var rY = Math.random() * (300 - 60) + 60;
+            var consumible = new ConsumibleVidaExtra(rX, rY);
+            this.consumibleVidaExtra.push(consumible);
+            this.espacio.agregarCuerpoDinamico(consumible);
+            this.iteracionesCrearConsumebleVida = 2000;
+        }
 
         // Eliminar disparosJugador sin velocidad
         for (var i = 0; i < this.disparosJugador.length; i++) {
@@ -134,11 +149,28 @@ class GameLayer extends Layer {
             }
         }
 
-        //colision Jugador
+        //colision Jugador - bloque agua
         for(i = 0; i < this.bloquesAgua.length; i++){
             if(this.jugador.colisiona(this.bloquesAgua[i])){
                 this.jugador.slow = true;
                 this.jugador.tiempoSlow = 120;
+            }
+        }
+
+        //colision jugador consumible vidas
+        for( i=0 ; i < this.consumibleVidaExtra.length; i++){
+            if(this.consumibleVidaExtra[i].tiempoVida > 0) {
+                //decremento el tiempo que le queda en pantalla
+                this.consumibleVidaExtra[i].tiempoVida--;
+
+                if (this.jugador.colisiona(this.consumibleVidaExtra[i])) {
+                    this.jugador.vidas++;
+                    this.espacio.eliminarCuerpoDinamico(this.consumibleVidaExtra[i]);
+                    this.consumibleVidaExtra.splice(i, 1);
+                }
+            }else{
+                this.espacio.eliminarCuerpoDinamico(this.consumibleVidaExtra[i]);
+                this.consumibleVidaExtra.splice(i, 1);
             }
         }
 
@@ -253,6 +285,9 @@ class GameLayer extends Layer {
         this.calcularScroll();
         this.fondo.dibujar();
         this.base.dibujar(this.scrollX, this.scrollY);
+        for(var i = 0; i < this.consumibleVidaExtra.length; i++){
+            this.consumibleVidaExtra[i].dibujar(this.scrollX, this.scrollY);
+        }
         for (var i = 0; i < this.bloquesDestruibles.length; i++) {
             this.bloquesDestruibles[i].dibujar(this.scrollX, this.scrollY);
         }
