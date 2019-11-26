@@ -52,6 +52,7 @@ class GameLayer extends Layer {
             var rX = Math.random() * (600 - 60) + 60;
             var rY = Math.random() * (300 - 60) + 60;
             var consumible = new ConsumibleMina(rX, rY);
+            consumible.y = consumible.y - consumible.alto / 2;
             this.consumibleMina.push(consumible);
             this.espacio.agregarCuerpoDinamico(consumible);
             this.iteracionesCrearConsumibleMina = 3000;
@@ -322,12 +323,6 @@ class GameLayer extends Layer {
         for(var i = 0; i < this.minas.length; i++){
             this.minas[i].dibujar(this.scrollX, this.scrollY);
         }
-        for (var i = 0; i < this.consumibleVidaExtra.length; i++) {
-            this.consumibleVidaExtra[i].dibujar(this.scrollX, this.scrollY);
-        }
-        for (var i = 0; i < this.consumibleMina.length; i++) {
-            this.consumibleMina[i].dibujar(this.scrollX, this.scrollY);
-        }
         for (var i = 0; i < this.bloquesDestruibles.length; i++) {
             this.bloquesDestruibles[i].dibujar(this.scrollX, this.scrollY);
         }
@@ -336,6 +331,12 @@ class GameLayer extends Layer {
         }
         for (var i = 0; i < this.bloquesAgua.length; i++) {
             this.bloquesAgua[i].dibujar(this.scrollX, this.scrollY);
+        }
+        for (var i = 0; i < this.consumibleVidaExtra.length; i++) {
+            this.consumibleVidaExtra[i].dibujar(this.scrollX, this.scrollY);
+        }
+        for (var i = 0; i < this.consumibleMina.length; i++) {
+            this.consumibleMina[i].dibujar(this.scrollX, this.scrollY);
         }
         for (var i = 0; i < this.disparosJugador.length; i++) {
             this.disparosJugador[i].dibujar(this.scrollX, this.scrollY);
