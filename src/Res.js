@@ -23,7 +23,9 @@ var imagenes = {
     bloque_agua : "res/water.png",
     bullet_explosion : "res/bullet_explosion.png",
     base : "res/base.png",
-    consumibleVidaExtra : "res/consumible_vida_extra.png",
+    consumible_vida_extra : "res/consumible_vida_extra.png",
+    consumible_mina : "res/consumible_mina.png",
+    mina : "res/mina.png",
 };
 
 var rutasImagenes = Object.values(imagenes);
