@@ -19,6 +19,7 @@ class GameLayer extends Layer {
 
         this.disparosJugador = [];
         this.disparosEnemigo = [];
+        this.minas = [];
 
         this.enemigos = [];
         this.cargarMapa("res/0.txt");
@@ -29,13 +30,14 @@ class GameLayer extends Layer {
 
         //generar consumibleVidaExtra
         if (this.iteracionesCrearConsumebleVida == null) {
-            this.iteracionesCrearConsumebleVida = 300;
+            this.iteracionesCrearConsumebleVida = 200;
         }
         this.iteracionesCrearConsumebleVida--;
         if (this.iteracionesCrearConsumebleVida < 0) {
             var rX = Math.random() * (600 - 60) + 60;
             var rY = Math.random() * (300 - 60) + 60;
             var consumible = new ConsumibleVidaExtra(rX, rY);
+            consumible.y = consumible.y - consumible.alto / 2;
             this.consumibleVidaExtra.push(consumible);
             this.espacio.agregarCuerpoDinamico(consumible);
             this.iteracionesCrearConsumebleVida = 2000;
@@ -204,6 +206,8 @@ class GameLayer extends Layer {
             }
         }
 
+        //Colison enemigos con mina
+
 
         /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
          for (var i = 0; i < this.disparosEnemigo.length; i++){
@@ -315,6 +319,9 @@ class GameLayer extends Layer {
         this.calcularScroll();
         this.fondo.dibujar();
         this.base.dibujar(this.scrollX, this.scrollY);
+        for(var i = 0; i < this.minas.length; i++){
+            this.minas[i].dibujar(this.scrollX, this.scrollY);
+        }
         for (var i = 0; i < this.consumibleVidaExtra.length; i++) {
             this.consumibleVidaExtra[i].dibujar(this.scrollX, this.scrollY);
         }
@@ -349,6 +356,14 @@ class GameLayer extends Layer {
             if (nuevoDisparo != null) {
                 this.espacio.agregarCuerpoDinamico(nuevoDisparo);
                 this.disparosJugador.push(nuevoDisparo);
+            }
+        }
+        //colocar mina
+        if(controles.plantarMina){
+            var nuevaMina = this.jugador.plantarMina();
+            if(nuevaMina != null){
+                this.espacio.agregarCuerpoDinamico(nuevaMina);
+                this.minas.push(nuevaMina);
             }
         }
         // Eje X
