@@ -62,10 +62,10 @@ class GameLayer extends Layer {
         for (var i = 0; i < this.disparosJugador.length; i++) {
             if (this.disparosJugador[i] != null &&
                 this.disparosJugador[i].vx == 0 && this.disparosJugador[i].vy == 0) {
-
                 this.espacio
                     .eliminarCuerpoDinamico(this.disparosJugador[i]);
                 this.disparosJugador.splice(i, 1);
+                i = i - 1;
             }
         }
 
@@ -73,10 +73,10 @@ class GameLayer extends Layer {
         for (var i = 0; i < this.disparosEnemigo.length; i++) {
             if (this.disparosEnemigo[i] != null &&
                 this.disparosEnemigo[i].vx == 0 && this.disparosEnemigo[i].vy == 0) {
-
                 this.espacio
                     .eliminarCuerpoDinamico(this.disparosEnemigo[i]);
                 this.disparosEnemigo.splice(i, 1);
+                i = i - 1;
             }
         }
 
@@ -86,6 +86,7 @@ class GameLayer extends Layer {
                 !this.disparosJugador[i].estaEnPantalla()) {
                 this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
                 this.disparosJugador.splice(i, 1);
+                i = i - 1;
             }
         }
 
@@ -106,6 +107,9 @@ class GameLayer extends Layer {
         for (var i = 0; i < this.disparosEnemigo.length; i++) {
             this.disparosEnemigo[i].actualizar();
         }
+        for (var i = 0; i < this.minas.length; i++) {
+            this.minas[i].actualizar();
+        }
 
         //colisiones disparoJugador
         for (var i = 0; i < this.disparosJugador.length; i++) {
@@ -122,20 +126,26 @@ class GameLayer extends Layer {
                     reproducirEfecto(efectos.explosion);
                     this.disparosJugador.splice(i, 1);
                     i = i - 1;
-                    this.espacio.eliminarCuerpoDinamico(this.enemigos[i]);
+                    this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
                     this.enemigos.splice(j, 1);
                     j = j - 1;
                 }
             }
-            //colisiones, disparoJugador - BloqueDestruible
+        }
+
+        //colisiones, disparoJugador - BloqueDestruible
+        for (var i = 0; i < this.disparosJugador.length; i++) {
             for (var k = 0; k < this.bloquesDestruibles.length; k++) {
                 if (this.disparosJugador[i] != null
                     && this.disparosJugador[i]
                         .colisiona(this.bloquesDestruibles[k])) {
                     this.espacio
                         .eliminarCuerpoEstatico(this.bloquesDestruibles[k]);
+                    this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
                     this.disparosJugador.splice(i, 1);
                     this.bloquesDestruibles.splice(k, 1);
+                    i = i - 1;
+                    k = k - 1;
                 }
             }
         }
@@ -149,20 +159,28 @@ class GameLayer extends Layer {
             // colisiones, disparoEnemigo - Jugador
             if (this.disparosEnemigo[i].colisiona(this.jugador)) {
                 this.jugador.vidas--;
+                this.espacio.eliminarCuerpoDinamico(this.enemigos[i]);
                 this.disparosEnemigo.splice(i, 1);
+                i = i - 1;
                 if (this.jugador.vidas == 0) {
                     this.iniciar();
                 }
             }
-            // colisiones, disparoEnemigo - BloqueDestruible
+        }
+
+        // colisiones, disparoEnemigo - BloqueDestruible
+        for (var i = 0; i < this.disparosEnemigo.length; i++) {
             for (var j = 0; j < this.bloquesDestruibles.length; j++) {
                 if (this.disparosEnemigo[i] != null
                     && this.disparosEnemigo[i]
                         .colisiona(this.bloquesDestruibles[j])) {
                     this.espacio
                         .eliminarCuerpoEstatico(this.bloquesDestruibles[j]);
+                    this.espacio.eliminarCuerpoDinamico(this.disparosEnemigo[i]);
                     this.disparosEnemigo.splice(i, 1);
                     this.bloquesDestruibles.splice(j, 1);
+                    i = i - 1;
+                    j = j - 1;
                 }
             }
         }
@@ -194,20 +212,54 @@ class GameLayer extends Layer {
 
         //colision jugador consumible minas
         for (var i = 0; i < this.consumibleMina.length; i++) {
-            if(this.consumibleMina[i].tiempoVida > 0){
+            if (this.consumibleMina[i].tiempoVida > 0) {
                 this.consumibleMina[i].tiempoVida--;
-                if(this.consumibleMina[i].colisiona(this.jugador)){
+                if (this.consumibleMina[i].colisiona(this.jugador)) {
                     this.jugador.minas = 3;
                     this.espacio.eliminarCuerpoDinamico(this.consumibleMina[i]);
                     this.consumibleMina.splice(i, 1);
+                    i = i - 1;
                 }
-            }else {
+            } else {
                 this.espacio.eliminarCuerpoDinamico(this.consumibleMina[i]);
                 this.consumibleMina.splice(i, 1);
+                i = i - 1;
             }
         }
 
-        //Colison enemigos con mina
+        //Colision enemigos con mina
+        for (var i = 0; i < this.minas.length; i++) {
+            if (this.minas[i].activa) {
+                for (var j = 0; j < this.enemigos.length; j++) {
+                    if (this.enemigos[j].colisiona(this.minas[i])) {
+                        //borro la mina y borro el enemigo
+                        this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
+                        this.espacio.eliminarCuerpoDinamico(this.minas[i]);
+                        this.enemigos.splice(j, 1);
+                        this.minas.splice(i, 1);
+                        i = i - 1;
+                        j = j - 1;
+                    }
+                }
+            }
+        }
+
+
+        //colision jugador con mina
+        for (var i = 0; i < this.minas.length; i++) {
+            if (this.minas[i].activa) {
+                if (this.minas[i].colisiona(this.jugador)) {
+                    console.log(this.jugador.vidas);
+                    this.jugador.vidas--;
+                    if (this.jugador.vidas == 0) {
+                        this.iniciar();
+                    }
+                    this.espacio.eliminarCuerpoDinamico(this.minas[i]);
+                    this.minas.splice(i, 1);
+                    i = i - 1;
+                }
+            }
+        }
 
 
         /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
@@ -320,7 +372,7 @@ class GameLayer extends Layer {
         this.calcularScroll();
         this.fondo.dibujar();
         this.base.dibujar(this.scrollX, this.scrollY);
-        for(var i = 0; i < this.minas.length; i++){
+        for (var i = 0; i < this.minas.length; i++) {
             this.minas[i].dibujar(this.scrollX, this.scrollY);
         }
         for (var i = 0; i < this.bloquesDestruibles.length; i++) {
@@ -360,9 +412,9 @@ class GameLayer extends Layer {
             }
         }
         //colocar mina
-        if(controles.plantarMina){
+        if (controles.plantarMina) {
             var nuevaMina = this.jugador.plantarMina();
-            if(nuevaMina != null){
+            if (nuevaMina != null) {
                 this.espacio.agregarCuerpoDinamico(nuevaMina);
                 this.minas.push(nuevaMina);
             }
