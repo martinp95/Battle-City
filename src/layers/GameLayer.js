@@ -170,13 +170,22 @@ class GameLayer extends Layer {
                 if (this.disparosJugador[i] != null &&
                     this.enemigos[j] != null &&
                     this.disparosJugador[i].colisiona(this.enemigos[j])) {
-                    this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
-                    reproducirEfecto(efectos.explosion);
-                    this.disparosJugador.splice(i, 1);
-                    i = i - 1;
-                    this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
-                    this.enemigos.splice(j, 1);
-                    j = j - 1;
+                    if(this.enemigos[j] instanceof EnemigoMedio
+                        && this.enemigos[j].vidas > 1) {
+                        this.enemigos[j].vidas--;
+                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
+                        reproducirEfecto(efectos.explosion);
+                        this.disparosJugador.splice(i, 1);
+                        i = i - 1;
+                    }else {
+                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
+                        reproducirEfecto(efectos.explosion);
+                        this.disparosJugador.splice(i, 1);
+                        i = i - 1;
+                        this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
+                        this.enemigos.splice(j, 1);
+                        j = j - 1;
+                    }
                 }
             }
         }
@@ -409,6 +418,12 @@ class GameLayer extends Layer {
                 enemigo.y = enemigo.y - enemigo.alto / 2;
                 this.enemigos.push(enemigo);
                 this.espacio.agregarCuerpoDinamico(enemigo);
+                break;
+            case "M":
+                var enemigoMedio = new EnemigoMedio(x,y);
+                enemigoMedio.y = enemigoMedio.y - enemigoMedio.alto / 2;
+                this.enemigos.push(enemigoMedio);
+                this.espacio.agregarCuerpoDinamico(enemigoMedio);
                 break;
             case "J":
                 this.jugador = new Jugador(x, y);
