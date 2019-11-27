@@ -16,6 +16,7 @@ class GameLayer extends Layer {
         this.consumibleVidaExtra = [];
         this.consumibleMina = [];
         this.consumibleDisparo = [];
+        this.consumibleGranada = [];
         this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
 
         this.disparosJugador = [];
@@ -72,6 +73,21 @@ class GameLayer extends Layer {
             this.consumibleDisparo.push(consumible);
             this.espacio.agregarCuerpoDinamico(consumible);
             this.iteracionesCrearConsumibleDisparo = 3000;
+        }
+
+        //generar ConsumibleGranada
+        if(this.iteracionesCrearConsumibleGranada == null){
+            this.iteracionesCrearConsumibleGranada = 0;
+        }
+        this.iteracionesCrearConsumibleGranada--;
+        if(this.iteracionesCrearConsumibleGranada < 0){
+            var rX = Math.random() * (600 - 60) + 60;
+            var rY = Math.random() * (300 - 60) + 60;
+            var consumible = new ConsumibleGranada(rX, rY);
+            consumible.y = consumible.y - consumible.alto / 2;
+            this.espacio.agregarCuerpoDinamico(consumible);
+            this.consumibleGranada.push(consumible);
+            this.iteracionesCrearConsumibleGranada = 3000;
         }
 
         // Eliminar disparosJugador sin velocidad
@@ -261,6 +277,28 @@ class GameLayer extends Layer {
             }
         }
 
+        //colisiona juagador consumibleGranada
+        for(var i = 0; i < this.consumibleGranada.length; i++){
+            if (this.consumibleGranada[i].tiempoVida > 0){
+                this.consumibleGranada[i].tiempoVida--;
+                if(this.consumibleGranada[i].colisiona(this.jugador)){
+                    //elimino a todos los enemigos de la partida
+                    for(var j = 0; j < this.enemigos.length; j++){
+                        this.espacio.eliminarCuerpoDinamico(this.enemigos[i]);
+                        this.enemigos.splice(j, 1);
+                        j = j - 1;
+                    }
+                    this.espacio.eliminarCuerpoDinamico(this.consumibleGranada[i]);
+                    this.consumibleGranada.splice(i, 1);
+                    i = i - 1;
+                }
+            }else{
+                this.espacio.eliminarCuerpoDinamico(this.consumibleGranada[i]);
+                this.consumibleGranada.splice(i, 1);
+                i = i - 1;
+            }
+        }
+
         //Colision enemigos con mina
         for (var i = 0; i < this.minas.length; i++) {
             if (this.minas[i].activa) {
@@ -423,6 +461,9 @@ class GameLayer extends Layer {
         }
         for(var i = 0; i < this.consumibleDisparo.length; i++){
             this.consumibleDisparo[i].dibujar(this.scrollX, this.scrollY);
+        }
+        for(var i = 0; i < this.consumibleGranada.length; i++){
+            this.consumibleGranada[i].dibujar(this.scrollX, this.scrollY);
         }
         for (var i = 0; i < this.disparosJugador.length; i++) {
             this.disparosJugador[i].dibujar(this.scrollX, this.scrollY);
