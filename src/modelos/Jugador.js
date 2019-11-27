@@ -28,6 +28,9 @@ class Jugador extends Modelo {
         // Disparo
         this.cadenciaDisparo = 15;
         this.tiempoDisparo = 0;
+        this.disparoMejorado = false;
+        this.cadenciaDisparoMejorado = 5;
+        this.tiempoDisparoMejorado = 180;
         //slow
         this.slow = false;
         this.tiempoSlow = 0;
@@ -92,6 +95,13 @@ class Jugador extends Modelo {
             this.tiempoDisparo--;
         }
 
+        //TiempoDisparoMejorado
+        if(this.tiempoDisparoMejorado > 0 ){
+            this.tiempoDisparoMejorado--;
+        }else{
+            this.disparoMejorado = false;
+        }
+
         //Tiempo slow
         if (this.tiempoSlow > 0) {
             this.tiempoSlow--;
@@ -139,7 +149,11 @@ class Jugador extends Modelo {
     disparar() {
         if (this.tiempoDisparo == 0) {
             // reiniciar Cadencia
-            this.tiempoDisparo = this.cadenciaDisparo;
+            if(this.disparoMejorado){
+                this.tiempoDisparo = this.cadenciaDisparoMejorado;
+            }else {
+                this.tiempoDisparo = this.cadenciaDisparo;
+            }
             reproducirEfecto(efectos.disparo);
             var disparo = null;
             if (this.orientacion == orientaciones.izquierda) {
@@ -161,5 +175,9 @@ class Jugador extends Modelo {
 
     dibujar(scrollX, scrollY) {
         this.animacion.dibujar(this.x - scrollX, this.y - scrollY);
+    }
+
+    reiniciarTiempoDisparoMejorado(){
+        this.tiempoDisparoMejorado = 180;
     }
 }

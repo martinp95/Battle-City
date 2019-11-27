@@ -25,6 +25,8 @@ var imagenes = {
     base : "res/base.png",
     consumible_vida_extra : "res/consumible_vida_extra.png",
     consumible_mina : "res/consumible_mina.png",
+    consumible_disparo : "res/consumible_disparo.png",
+    consumible_granada : "res/consumible_granada.png",
     mina : "res/mina.png",
 };
 
