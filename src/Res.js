@@ -27,6 +27,7 @@ var imagenes = {
     consumible_mina : "res/consumible_mina.png",
     consumible_disparo : "res/consumible_disparo.png",
     consumible_granada : "res/consumible_granada.png",
+    consumible_propulsion : "res/consumible_propulsion.png",
     mina : "res/mina.png",
 };
 

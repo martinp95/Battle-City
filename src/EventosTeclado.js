@@ -27,6 +27,9 @@ function onKeyDown( event) {
             case 77:
                 controles.plantarMina = true;
                 break;
+            case 80:
+                controles.activarPropulsion = true;
+                break;
         }
     }
 }
@@ -63,6 +66,9 @@ function onKeyUp( event) {
             break;
         case 77:
             controles.plantarMina = false;
+            break;
+        case 80:
+            controles.activarPropulsion = false;
             break;
     }
 }
