@@ -17,6 +17,7 @@ class GameLayer extends Layer {
         this.consumibleMina = [];
         this.consumibleDisparo = [];
         this.consumibleGranada = [];
+        this.consumiblePropulsion = [];
         this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
 
         this.disparosJugador = [];
@@ -88,6 +89,21 @@ class GameLayer extends Layer {
             this.espacio.agregarCuerpoDinamico(consumible);
             this.consumibleGranada.push(consumible);
             this.iteracionesCrearConsumibleGranada = 3000;
+        }
+
+        //generar ConsumiblePropulsion
+        if(this.iteracionesCrearConsumiblePropulsion == null){
+            this.iteracionesCrearConsumiblePropulsion = 0;
+        }
+        this.iteracionesCrearConsumiblePropulsion--;
+        if(this.iteracionesCrearConsumiblePropulsion < 0){
+            var rX = Math.random() * (600 - 60) + 60;
+            var rY = Math.random() * (300 - 60) + 60;
+            var consumible = new ConsumiblePropulsion(rX, rY);
+            consumible.y = consumible.y - consumible.alto / 2;
+            this.espacio.agregarCuerpoDinamico(consumible);
+            this.consumiblePropulsion.push(consumible);
+            this.iteracionesCrearConsumiblePropulsion = 3000;
         }
 
         // Eliminar disparosJugador sin velocidad
@@ -277,6 +293,24 @@ class GameLayer extends Layer {
             }
         }
 
+        //colision jugador consumiblePropulsion
+        for(var i = 0; i < this.consumiblePropulsion.length; i++){
+            if(this.consumiblePropulsion[i].tiempoVida > 0){
+                this.consumiblePropulsion[i].tiempoVida--;
+                if(this.consumiblePropulsion[i].colisiona(this.jugador)){
+                    this.jugador.propulsion = true;
+                    this.jugador.reiniciarTiempoPropulsion();
+                    this.espacio.eliminarCuerpoDinamico(this.consumiblePropulsion[i]);
+                    this.consumiblePropulsion.splice(i, 1);
+                    i = i - 1;
+                }
+            }else{
+                this.espacio.eliminarCuerpoDinamico(this.consumiblePropulsion[i]);
+                this.consumiblePropulsion.splice(i, 1);
+                i = i - 1;
+            }
+        }
+
         //colisiona juagador consumibleGranada
         for(var i = 0; i < this.consumibleGranada.length; i++){
             if (this.consumibleGranada[i].tiempoVida > 0){
@@ -330,6 +364,7 @@ class GameLayer extends Layer {
                 }
             }
         }
+        
         /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
          for (var i = 0; i < this.disparosEnemigo.length; i++){
              for (var j = 0; i < this.disparosJugador.length; j++){
@@ -383,7 +418,6 @@ class GameLayer extends Layer {
             case "#":
                 var bloque = new Bloque(imagenes.bloque_destruible, x, y);
                 bloque.y = bloque.y - bloque.alto / 2;
-                // modificación para empezar a contar desde el suelo
                 this.bloquesDestruibles.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
@@ -461,6 +495,9 @@ class GameLayer extends Layer {
         for(var i = 0; i < this.consumibleDisparo.length; i++){
             this.consumibleDisparo[i].dibujar(this.scrollX, this.scrollY);
         }
+        for(var i = 0; i < this.consumiblePropulsion.length; i++){
+            this.consumiblePropulsion[i].dibujar(this.scrollX, this.scrollY);
+        }
         for(var i = 0; i < this.consumibleGranada.length; i++){
             this.consumibleGranada[i].dibujar(this.scrollX, this.scrollY);
         }
@@ -492,6 +529,10 @@ class GameLayer extends Layer {
                 this.espacio.agregarCuerpoDinamico(nuevaMina);
                 this.minas.push(nuevaMina);
             }
+        }
+        //activar propulsion jugador
+        if(controles.activarPropulsion){
+            this.jugador.activarPropulsion();
         }
         // Eje X
         if (controles.moverX > 0) {

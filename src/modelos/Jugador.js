@@ -40,6 +40,10 @@ class Jugador extends Modelo {
         this.minas = 0;
         this.tiempoMina = 0;
         this.cadenciaMina = 10;
+        //propulsion
+        this.propulsion = false;
+        this.tiempoPropulsion = 150;
+        this.propulsionActica = false;
     }
 
     actualizar() {
@@ -113,11 +117,21 @@ class Jugador extends Modelo {
         if (this.tiempoMina > 0) {
             this.tiempoMina--;
         }
+
+        //Tiempo Propulsion
+        if(this.tiempoPropulsion > 0 ){
+            this.tiempoPropulsion--;
+        }else{
+            this.propulsion = false;
+            this.propulsionActica = false;
+        }
     }
 
     moverX(direccion) {
         if (this.slow) {
             this.vx = direccion * 0.5;
+        }else if(this.propulsionActica){
+            this.vx = direccion * 3;
         } else {
             this.vx = direccion * 1.5;
         }
@@ -126,6 +140,8 @@ class Jugador extends Modelo {
     moverY(direccion) {
         if (this.slow) {
             this.vy = direccion * 0.5;
+        }else if(this.propulsionActica){
+            this.vy = direccion * 3;
         } else {
             this.vy = direccion * 1.5;
         }
@@ -143,6 +159,12 @@ class Jugador extends Modelo {
             }
         }else{
             return null;
+        }
+    }
+
+    activarPropulsion(){
+        if(this.propulsion){
+            this.propulsionActica = true;
         }
     }
 
@@ -179,5 +201,9 @@ class Jugador extends Modelo {
 
     reiniciarTiempoDisparoMejorado(){
         this.tiempoDisparoMejorado = 180;
+    }
+
+    reiniciarTiempoPropulsion(){
+        this.tiempoPropulsion = 150;
     }
 }
