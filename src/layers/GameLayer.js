@@ -320,7 +320,6 @@ class GameLayer extends Layer {
         for (var i = 0; i < this.minas.length; i++) {
             if (this.minas[i].activa) {
                 if (this.minas[i].colisiona(this.jugador)) {
-                    console.log(this.jugador.vidas);
                     this.jugador.vidas--;
                     if (this.jugador.vidas == 0) {
                         this.iniciar();
