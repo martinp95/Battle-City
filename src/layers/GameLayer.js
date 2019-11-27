@@ -46,7 +46,7 @@ class GameLayer extends Layer {
 
         //generar consumibleMina
         if (this.iteracionesCrearConsumibleMina == null) {
-            this.iteracionesCrearConsumibleMina = 100;
+            this.iteracionesCrearConsumibleMina = 0;
         }
         this.iteracionesCrearConsumibleMina--;
         if (this.iteracionesCrearConsumibleMina < 0) {
