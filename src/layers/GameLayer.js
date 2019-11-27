@@ -15,6 +15,7 @@ class GameLayer extends Layer {
         this.bloquesAgua = [];
         this.consumibleVidaExtra = [];
         this.consumibleMina = [];
+        this.consumibleDisparo = [];
         this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
 
         this.disparosJugador = [];
@@ -45,7 +46,7 @@ class GameLayer extends Layer {
 
         //generar consumibleMina
         if (this.iteracionesCrearConsumibleMina == null) {
-            this.iteracionesCrearConsumibleMina = 0;
+            this.iteracionesCrearConsumibleMina = 100;
         }
         this.iteracionesCrearConsumibleMina--;
         if (this.iteracionesCrearConsumibleMina < 0) {
@@ -56,6 +57,21 @@ class GameLayer extends Layer {
             this.consumibleMina.push(consumible);
             this.espacio.agregarCuerpoDinamico(consumible);
             this.iteracionesCrearConsumibleMina = 3000;
+        }
+
+        //generar consumibleDisparo
+        if(this.iteracionesCrearConsumibleDisparo == null){
+            this.iteracionesCrearConsumibleDisparo = 0;
+        }
+        this.iteracionesCrearConsumibleDisparo--;
+        if(this.iteracionesCrearConsumibleDisparo < 0){
+            var rX = Math.random() * (600 - 60) + 60;
+            var rY = Math.random() * (300 - 60) + 60;
+            var consumible = new ConsumibleDisparo(rX, rY);
+            consumible.y = consumible.y - consumible.alto / 2;
+            this.consumibleDisparo.push(consumible);
+            this.espacio.agregarCuerpoDinamico(consumible);
+            this.iteracionesCrearConsumibleDisparo = 3000;
         }
 
         // Eliminar disparosJugador sin velocidad
@@ -227,6 +243,24 @@ class GameLayer extends Layer {
             }
         }
 
+        //colision jugador consumibleDisparo
+        for(var i = 0; i < this.consumibleDisparo.length; i++){
+            if(this.consumibleDisparo[i].tiempoVida > 0){
+                this.consumibleDisparo[i].tiempoVida--;
+                if (this.consumibleDisparo[i].colisiona(this.jugador)){
+                    this.jugador.disparoMejorado = true;
+                    this.jugador.reiniciarTiempoDisparoMejorado();
+                    this.espacio.eliminarCuerpoDinamico(this.consumibleDisparo[i]);
+                    this.consumibleDisparo.splice(i, 1);
+                    i = i - 1;
+                }
+            }else{
+                this.espacio.eliminarCuerpoDinamico(this.consumibleDisparo[i]);
+                this.consumibleDisparo.splice(i, 1);
+                i = i - 1;
+            }
+        }
+
         //Colision enemigos con mina
         for (var i = 0; i < this.minas.length; i++) {
             if (this.minas[i].activa) {
@@ -244,7 +278,6 @@ class GameLayer extends Layer {
             }
         }
 
-
         //colision jugador con mina
         for (var i = 0; i < this.minas.length; i++) {
             if (this.minas[i].activa) {
@@ -260,8 +293,6 @@ class GameLayer extends Layer {
                 }
             }
         }
-
-
         /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
          for (var i = 0; i < this.disparosEnemigo.length; i++){
              for (var j = 0; i < this.disparosJugador.length; j++){
@@ -389,6 +420,9 @@ class GameLayer extends Layer {
         }
         for (var i = 0; i < this.consumibleMina.length; i++) {
             this.consumibleMina[i].dibujar(this.scrollX, this.scrollY);
+        }
+        for(var i = 0; i < this.consumibleDisparo.length; i++){
+            this.consumibleDisparo[i].dibujar(this.scrollX, this.scrollY);
         }
         for (var i = 0; i < this.disparosJugador.length; i++) {
             this.disparosJugador[i].dibujar(this.scrollX, this.scrollY);
