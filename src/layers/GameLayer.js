@@ -231,7 +231,9 @@ class GameLayer extends Layer {
             }
             // colisiones, disparoEnemigo - Jugador
             if (this.disparosEnemigo[i].colisiona(this.jugador)) {
-                this.jugador.vidas--;
+                if(!this.jugador.invulnerable) {
+                    this.jugador.vidas--;
+                }
                 this.espacio.eliminarCuerpoDinamico(this.enemigos[i]);
                 this.disparosEnemigo.splice(i, 1);
                 i = i - 1;
@@ -341,7 +343,7 @@ class GameLayer extends Layer {
             if(this.consumibleInvulnerabilidad[i].tiempoVida > 0){
                 this.consumibleInvulnerabilidad[i].tiempoVida--;
                 if(this.consumibleInvulnerabilidad[i].colisiona(this.jugador)){
-                    this.jugador.Invulnerable = true;
+                    this.jugador.invulnerable = true;
                     this.jugador.reiniciarTiempoInvulnerable();
                     this.espacio.eliminarCuerpoDinamico(this.consumibleInvulnerabilidad[i]);
                     this.consumibleInvulnerabilidad.splice(i, 1);
@@ -397,7 +399,9 @@ class GameLayer extends Layer {
         for (var i = 0; i < this.minas.length; i++) {
             if (this.minas[i].activa) {
                 if (this.minas[i].colisiona(this.jugador)) {
-                    this.jugador.vidas--;
+                    if(!this.jugador.invulnerable) {
+                        this.jugador.vidas--;
+                    }
                     if (this.jugador.vidas == 0) {
                         this.iniciar();
                     }

@@ -46,7 +46,7 @@ class Jugador extends Modelo {
         this.propulsionActica = false;
         //invulnerable
         this.invulnerable = false;
-        this.tiempoInvulnerable = 200;
+        this.tiempoInvulnerable = 300;
     }
 
     actualizar() {
@@ -218,6 +218,6 @@ class Jugador extends Modelo {
     }
 
     reiniciarTiempoInvulnerable(){
-        this.tiempoInvulnerable = 200;
+        this.tiempoInvulnerable = 300;
     }
 }
