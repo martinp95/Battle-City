@@ -31,6 +31,7 @@ var imagenes = {
     bloque_destruible : "res/wall_brick.png",
     bloque_irrompible : "res/wall_steel.png",
     bloque_agua : "res/water.png",
+    bloque_limite : "res/bloque_limite.png",
     bullet_explosion : "res/bullet_explosion.png",
     base : "res/base.png",
     consumible_vida_extra : "res/consumible_vida_extra.png",
