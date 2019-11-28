@@ -14,6 +14,7 @@ class GameLayer extends Layer {
         this.bloquesDestruibles = [];
         this.bloquesIrrompibles = [];
         this.bloquesAgua = [];
+        this.bloquesLimite = [];
         this.consumibleVidaExtra = [];
         this.consumibleMina = [];
         this.consumibleDisparo = [];
@@ -206,6 +207,15 @@ class GameLayer extends Layer {
                 !this.disparosJugador[i].estaEnPantalla()) {
                 this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
                 this.disparosJugador.splice(i, 1);
+                i = i - 1;
+            }
+        }
+
+        //eliminar disparos enemigo fuera de pantalla
+        for(var i = 0; i < this.disparosEnemigo.length;i++){
+            if(this.disparosEnemigo[i] != null && !this.disparosEnemigo[i].estaEnPantalla()){
+                this.espacio.eliminarCuerpoDinamico(this.disparosEnemigo[i]);
+                this.disparosEnemigo.splice(i, 1);
                 i = i - 1;
             }
         }
@@ -555,6 +565,12 @@ class GameLayer extends Layer {
                 this.bloquesAgua.push(bloque);
                 this.espacio.agregarCuerpoDinamico(bloque);
                 break;
+            case "4":
+                var bloque = new Bloque(imagenes.bloque_limite, x, y);
+                bloque.y = bloque.y - bloque.alto / 2;
+                this.bloquesLimite.push(bloque);
+                this.espacio.agregarCuerpoEstatico(bloque);
+                break;
             case "B":
                 this.base = new Bloque(imagenes.base, x, y);
                 this.base.y = this.base.y - this.base.alto / 2;
@@ -607,6 +623,9 @@ class GameLayer extends Layer {
         }
         for (var i = 0; i < this.bloquesAgua.length; i++) {
             this.bloquesAgua[i].dibujar(this.scrollX, this.scrollY);
+        }
+        for (var i = 0; i < this.bloquesLimite.length; i++) {
+            this.bloquesLimite[i].dibujar(this.scrollX, this.scrollY);
         }
         for (var i = 0; i < this.consumibleVidaExtra.length; i++) {
             this.consumibleVidaExtra[i].dibujar(this.scrollX, this.scrollY);
