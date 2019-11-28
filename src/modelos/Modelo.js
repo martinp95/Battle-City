@@ -29,38 +29,6 @@ class Modelo {
         return colisiona;
     }
 
-    colisionaDetras(modelo){
-        //no funciona, revisar
-        if (modelo.orientacion == orientaciones.arriba
-            && modelo.x - modelo.ancho / 2 <= this.x + this.ancho / 2
-            && modelo.x + modelo.ancho / 2 >= this.x - this.ancho / 2
-            && this.y - this.alto/2 == modelo.y + modelo.alto/2){
-            return true;
-        }
-        //no funciona, revisar
-        if (modelo.orientacion == orientaciones.abajo
-            && modelo.x - modelo.ancho / 2 <= this.x + this.ancho / 2
-            && modelo.x + modelo.ancho / 2 >= this.x - this.ancho / 2
-            && this.y + this.alto / 2 == modelo.y - modelo.alto / 2){
-            return true;
-        }
-        //funciona
-        if (modelo.orientacion == orientaciones.izquierda
-            && modelo.x + modelo.ancho/2 >= this.x - this.ancho/2
-            && this.y - this.alto/2 <= modelo.y + modelo.alto/2
-            && this.y + this.alto/2 >= modelo.y - modelo.alto/2 ){
-            return true;
-        }
-        //No funciona, revisar
-        if (modelo. orientacion == orientaciones.derecha
-            && modelo.x - modelo.ancho/2 <=  this.x + this.ancho/2
-            && this.y + this.alto/2 <= modelo.y - modelo.alto/2
-            && this.y - this.alto/2 >= modelo.y + modelo.alto/2 ){
-            return true;
-        }
-        return false;
-    }
-
     //metodo de colision por arriba
     colisionaPorArriba(modelo){
         var colisiona = false;
