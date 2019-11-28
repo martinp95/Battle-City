@@ -177,6 +177,13 @@ class GameLayer extends Layer {
                         reproducirEfecto(efectos.explosion);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
+                    }else if (this.enemigos[j] instanceof EnemigoFuerte
+                        && !this.disparosJugador[i].colisionaDetras(this.enemigos[j])){
+                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
+                        reproducirEfecto(efectos.golpeado);
+                        this.disparosJugador.splice(i, 1);
+                        i = i - 1;
+
                     }else {
                         this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
                         reproducirEfecto(efectos.explosion);
@@ -424,6 +431,12 @@ class GameLayer extends Layer {
                 enemigoMedio.y = enemigoMedio.y - enemigoMedio.alto / 2;
                 this.enemigos.push(enemigoMedio);
                 this.espacio.agregarCuerpoDinamico(enemigoMedio);
+                break;
+            case "F":
+                var enemigoFuerte = new EnemigoFuerte(x,y);
+                enemigoFuerte.y = enemigoFuerte.y - enemigoFuerte.alto / 2;
+                this.enemigos.push(enemigoFuerte);
+                this.espacio.agregarCuerpoDinamico(enemigoFuerte);
                 break;
             case "J":
                 this.jugador = new Jugador(x, y);
