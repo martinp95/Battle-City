@@ -18,6 +18,7 @@ class GameLayer extends Layer {
         this.consumibleDisparo = [];
         this.consumibleGranada = [];
         this.consumiblePropulsion = [];
+        this.consumibleInvulnerabilidad = [];
         this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
 
         this.disparosJugador = [];
@@ -104,6 +105,21 @@ class GameLayer extends Layer {
             this.espacio.agregarCuerpoDinamico(consumible);
             this.consumiblePropulsion.push(consumible);
             this.iteracionesCrearConsumiblePropulsion = 3000;
+        }
+
+        //generar consumibleInvulnerabilidad
+        if(this.iteracionesCrearConsumibleInvulnerabilidad == null){
+            this.iteracionesCrearConsumibleInvulnerabilidad = 0;
+        }
+        this.iteracionesCrearConsumibleInvulnerabilidad--;
+        if(this.iteracionesCrearConsumibleInvulnerabilidad < 0){
+            var rX = Math.random() * (600 - 60) + 60;
+            var rY = Math.random() * (300 - 60) + 60;
+            var consumible = new ConsumibleInvulnerabilidad(rX, rY);
+            consumible.y = consumible.y - consumible.alto / 2;
+            this.espacio.agregarCuerpoDinamico(consumible);
+            this.consumibleInvulnerabilidad.push(consumible);
+            this.iteracionesCrearConsumibleInvulnerabilidad = 3000;
         }
 
         // Eliminar disparosJugador sin velocidad
@@ -373,7 +389,7 @@ class GameLayer extends Layer {
                 }
             }
         }
-        
+
         /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
          for (var i = 0; i < this.disparosEnemigo.length; i++){
              for (var j = 0; i < this.disparosJugador.length; j++){
@@ -512,6 +528,9 @@ class GameLayer extends Layer {
         }
         for(var i = 0; i < this.consumiblePropulsion.length; i++){
             this.consumiblePropulsion[i].dibujar(this.scrollX, this.scrollY);
+        }
+        for(var i = 0; i < this.consumibleInvulnerabilidad.length; i++){
+            this.consumibleInvulnerabilidad[i].dibujar(this.scrollX, this.scrollY);
         }
         for(var i = 0; i < this.consumibleGranada.length; i++){
             this.consumibleGranada[i].dibujar(this.scrollX, this.scrollY);
