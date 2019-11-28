@@ -44,6 +44,9 @@ class Jugador extends Modelo {
         this.propulsion = false;
         this.tiempoPropulsion = 150;
         this.propulsionActica = false;
+        //invulnerable
+        this.invulnerable = false;
+        this.tiempoInvulnerable = 300;
     }
 
     actualizar() {
@@ -125,6 +128,13 @@ class Jugador extends Modelo {
             this.propulsion = false;
             this.propulsionActica = false;
         }
+
+        // Tiempo invulnerable
+        if(this.tiempoInvulnerable > 0){
+            this.tiempoInvulnerable--;
+        }else {
+            this.invulnerable = false;
+        }
     }
 
     moverX(direccion) {
@@ -205,5 +215,9 @@ class Jugador extends Modelo {
 
     reiniciarTiempoPropulsion(){
         this.tiempoPropulsion = 150;
+    }
+
+    reiniciarTiempoInvulnerable(){
+        this.tiempoInvulnerable = 300;
     }
 }
