@@ -178,7 +178,7 @@ class GameLayer extends Layer {
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
                     }else if (this.enemigos[j] instanceof EnemigoFuerte
-                        && !this.disparosJugador[i].colisionaDetras(this.enemigos[j])){
+                        && !this.disparosJugador[i].colisionaPorArriba(this.enemigos[j])){
                         this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
                         reproducirEfecto(efectos.golpeado);
                         this.disparosJugador.splice(i, 1);

@@ -34,7 +34,7 @@ class Modelo {
         if (modelo.orientacion == orientaciones.arriba
             && modelo.x - modelo.ancho / 2 <= this.x + this.ancho / 2
             && modelo.x + modelo.ancho / 2 >= this.x - this.ancho / 2
-            && this.y - this.alto/2 >= modelo.y + modelo.alto/2){
+            && this.y - this.alto/2 == modelo.y + modelo.alto/2){
             return true;
         }
         //no funciona, revisar
