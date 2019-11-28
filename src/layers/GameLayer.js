@@ -9,6 +9,7 @@ class GameLayer extends Layer {
         this.espacio = new Espacio();
         this.scrollX = 0;
         this.scrollY = 0;
+
         reproducirMusica();
         this.bloquesDestruibles = [];
         this.bloquesIrrompibles = [];
@@ -25,12 +26,67 @@ class GameLayer extends Layer {
         this.disparosEnemigo = [];
         this.minas = [];
 
+        this.nivel = niveles.uno;
+        this.enemigosRestantes = 8 * this.nivel;
+        this.enemigosEliminados = 0;
         this.enemigos = [];
         this.cargarMapa("res/0.txt");
     }
 
     actualizar() {
         this.espacio.actualizar();
+
+        //Controlar el nivel en el que se está jugando
+        if(this.nivel == niveles.uno && this.enemigosEliminados == 0){
+            console.log("Pasa a nivel 2");
+            this.nivel = niveles.dos;
+            this.enemigosRestantes = 8 * this.nivel;
+            this.enemigosEliminados = 0;
+            this.cargarMapa("res/0.txt");
+        } else if (this.nivel == niveles.dos && this.enemigosEliminados == 0){
+            console.log("Pasa a nivel 3");
+            this.nivel = niveles.tres;
+            this.enemigosRestantes = 8 * this.nivel;
+            this.enemigosEliminados = 0;
+            this.cargarMapa("res/0.txt");
+        } else if (this.nivel == niveles.tres && this.enemigosEliminados == 0){
+            console.log("Gana el juego");
+        }
+
+        //generar enemigos periódicos
+        if (this.iteracionesCrearEnemigo == null) {
+            this.iteracionesCrearEnemigo = 100;
+        }
+        this.iteracionesCrearEnemigo--;
+        if(this.enemigosRestantes > 0 && this.iteracionesCrearEnemigo == 0){
+            var creaEnemigo =     true;
+            var tipoEnemigo =  Math.floor(Math.random() * 3)
+            var rX = Math.random() * (600 - 60) + 60;
+            var rY = Math.random() * (300 - 60) + 60;
+            var nuevoEnemigo = new Enemigo(rX,rY);
+            if (tipoEnemigo == 1) {
+                nuevoEnemigo = new EnemigoMedio(rX, rY);
+            }
+            if (tipoEnemigo == 2) {
+                nuevoEnemigo = new EnemigoFuerte(rX, rY);
+            }
+            for (var i = 0; i < this.bloquesDestruibles.length; i++) {
+                if(nuevoEnemigo.colisiona(this.bloquesDestruibles[i])){
+                    creaEnemigo = false;
+                }
+            }
+            for (var i = 0; i < this.bloquesIrrompibles.length; i++) {
+                if(nuevoEnemigo.colisiona(this.bloquesIrrompibles[i])){
+                    creaEnemigo = false;
+                }
+            }
+            if (creaEnemigo){
+                this.enemigos.push(nuevoEnemigo);
+                this.espacio.agregarCuerpoDinamico(nuevoEnemigo);
+                this.enemigosRestantes--;
+            }
+            this.iteracionesCrearEnemigo = 100;
+        }
 
         //generar consumibleVidaExtra
         if (this.iteracionesCrearConsumebleVida == null) {
