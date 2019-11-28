@@ -336,6 +336,24 @@ class GameLayer extends Layer {
             }
         }
 
+        //colision jugador consumibleInvulnerabilidad
+        for(var i = 0; i < this.consumibleInvulnerabilidad.length; i++){
+            if(this.consumibleInvulnerabilidad[i].tiempoVida > 0){
+                this.consumibleInvulnerabilidad[i].tiempoVida--;
+                if(this.consumibleInvulnerabilidad[i].colisiona(this.jugador)){
+                    this.jugador.Invulnerable = true;
+                    this.jugador.reiniciarTiempoInvulnerable();
+                    this.espacio.eliminarCuerpoDinamico(this.consumibleInvulnerabilidad[i]);
+                    this.consumibleInvulnerabilidad.splice(i, 1);
+                    i = i - 1;
+                }
+            }else{
+                this.espacio.eliminarCuerpoDinamico(this.consumibleInvulnerabilidad[i]);
+                this.consumibleInvulnerabilidad.splice(i, 1);
+                i = i - 1;
+            }
+        }
+
         //colisiona juagador consumibleGranada
         for(var i = 0; i < this.consumibleGranada.length; i++){
             if (this.consumibleGranada[i].tiempoVida > 0){
