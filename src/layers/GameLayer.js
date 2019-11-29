@@ -497,9 +497,13 @@ class GameLayer extends Layer {
                         && p.origenX === this.tuneles[i].destinoX
                         && p.origenY === this.tuneles[i].destinoY);
                     this.tuneles[j].usada = true;
+                    if(this.jugador.x > this.tuneles[i].destinoX){
+                        this.usadoTunelDerecha = true;
+                    }else{
+                        this.usadoTunelIzquierda = true;
+                    }
                     this.jugador.x = this.tuneles[i].destinoX;
                     this.jugador.y = this.tuneles[i].destinoY;
-                    this.dibujar();
                 }
             }else{
                 this.tuneles[i].usada = false;
@@ -605,7 +609,7 @@ class GameLayer extends Layer {
                     tunel.destinoY = tunelGemelo.origenY;
                 }
                 this.tuneles.push(tunel);
-                this.espacio.agregarCuerpoDinamico(tunel);
+                this.espacio.agregarCuerpoEstatico(tunel);
                 break;
             case "B":
                 this.base = new Bloque(imagenes.base, x, y);
@@ -646,6 +650,15 @@ class GameLayer extends Layer {
 
     dibujar() {
         this.calcularScroll();
+        if(this.usadoTunelIzquierda){
+            this.scrollX = 285;
+            this.usadoTunelIzquierda = false;
+        }else if(this.usadoTunelDerecha){
+            this.scrollX = 2;
+            this.usadoTunelDerecha = false;
+        }
+        console.log(this.scrollX);
+        console.log(this.scrollY);
         this.fondo.dibujar();
         this.base.dibujar(this.scrollX, this.scrollY);
         for (var i = 0; i < this.minas.length; i++) {
