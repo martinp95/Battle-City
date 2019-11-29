@@ -42,6 +42,7 @@ var imagenes = {
     consumible_propulsion : "res/consumible_propulsion.png",
     consumible_invulnerabilidad : "res/consumible_invulnerabilidad.png",
     mina : "res/mina.png",
+    tunel : "res/tunel.png",
 };
 
 var rutasImagenes = Object.values(imagenes);

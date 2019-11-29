@@ -12,7 +12,7 @@ orientaciones.arriba = 4;
 orientaciones.abajo = 5;
 
 
-var niveles = {}
+var niveles = {};
 niveles.uno = 1;
 niveles.dos = 2;
 niveles.tres = 3;

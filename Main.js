@@ -16,7 +16,7 @@ function iniciarJuego() {
 }
 
 function loop(){
-    console.log("loop - ")
+    console.log("loop - ");
     gameLayer.actualizar();
     gameLayer.procesarControles();
     gameLayer.dibujar();
@@ -26,7 +26,7 @@ function loop(){
 window.addEventListener('load', this.resize, false);
 
 function resize() {
-    console.log("Resize")
+    console.log("Resize");
     var escaladoAncho = parseFloat(window.innerWidth / canvas.width);
     var escaladoAlto = parseFloat(window.innerHeight / canvas.height);
 
