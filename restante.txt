@@ -1,0 +1,7 @@
+1- Mostrar animación enemigos al salir
+2- Mostrar vidas del jugador
+3- Mostrar Minas del jugador
+4- Mostrar invulnerabilidad
+5- Túneles de acceso rápido
+6- Ajustar CDs de los consumibles y de los respawns de los enemigos
+7- Pantalla de inicio

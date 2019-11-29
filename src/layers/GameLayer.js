@@ -259,8 +259,8 @@ class GameLayer extends Layer {
                         reproducirEfecto(efectos.explosion);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
-                    }else if (this.enemigos[j] instanceof EnemigoFuerte
-                        && !this.disparosJugador[i].colisionaPorArriba(this.enemigos[j])){
+                    }else if (this. enemigos[j] instanceof EnemigoFuerte
+                        && !this.jugador.disparoMejorado){
                         this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
                         reproducirEfecto(efectos.golpeado);
                         this.disparosJugador.splice(i, 1);
@@ -437,6 +437,7 @@ class GameLayer extends Layer {
                     for(var j = 0; j < this.enemigos.length; j++){
                         this.espacio.eliminarCuerpoDinamico(this.enemigos[i]);
                         this.enemigos.splice(j, 1);
+                        this.enemigosEliminados++;
                         j = j - 1;
                     }
                     this.espacio.eliminarCuerpoDinamico(this.consumibleGranada[i]);
@@ -460,6 +461,7 @@ class GameLayer extends Layer {
                         this.espacio.eliminarCuerpoDinamico(this.minas[i]);
                         this.enemigos.splice(j, 1);
                         this.minas.splice(i, 1);
+                        this.enemigosEliminados++;
                         i = i - 1;
                         j = j - 1;
                     }
