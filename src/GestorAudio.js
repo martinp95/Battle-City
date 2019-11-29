@@ -5,7 +5,7 @@ var efectos = {
     disparo : "res/bullet_shot.ogg",
     explosion : "res/explosion_1.ogg",
     golpeado: "res/bullet_hit_1.ogg"
-}
+};
 
 function reproducirMusica() {
     musicaInicio.play();

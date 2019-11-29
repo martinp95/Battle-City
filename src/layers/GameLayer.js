@@ -15,6 +15,7 @@ class GameLayer extends Layer {
         this.bloquesIrrompibles = [];
         this.bloquesAgua = [];
         this.bloquesLimite = [];
+        this.tuneles = [];
         this.consumibleVidaExtra = [];
         this.consumibleMina = [];
         this.consumibleDisparo = [];
@@ -486,6 +487,29 @@ class GameLayer extends Layer {
             }
         }
 
+        //colision tunel
+        for(var i = 0;i < this.tuneles.length; i++){
+            if(this.jugador.colisiona(this.tuneles[i])){
+                if(! this.tuneles[i].usada){
+                    this.tuneles[i].usada = true;
+                    var j = this.tuneles.findIndex(p =>
+                        p.tipo === this.tuneles[i].tipo
+                        && p.origenX === this.tuneles[i].destinoX
+                        && p.origenY === this.tuneles[i].destinoY);
+                    this.tuneles[j].usada = true;
+                    if(this.jugador.x > this.tuneles[i].destinoX){
+                        this.usadoTunelDerecha = true;
+                    }else{
+                        this.usadoTunelIzquierda = true;
+                    }
+                    this.jugador.x = this.tuneles[i].destinoX;
+                    this.jugador.y = this.tuneles[i].destinoY;
+                }
+            }else{
+                this.tuneles[i].usada = false;
+            }
+        }
+
         /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
          for (var i = 0; i < this.disparosEnemigo.length; i++){
              for (var j = 0; i < this.disparosJugador.length; j++){
@@ -572,6 +596,21 @@ class GameLayer extends Layer {
                 this.bloquesLimite.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
                 break;
+            case "T":
+                var tunel = new Tunel(imagenes.tunel, x, y, 9);
+                tunel.y = tunel.y - tunel.alto / 2;
+                tunel.origenY = tunel.origenY - tunel.alto / 2;
+                var tunelGemelo = this.tuneles.find(p => p.tipo === 9);
+                if (tunelGemelo != undefined) {
+                    var i = this.tuneles.findIndex(p => p.tipo === 9);
+                    this.tuneles[i].destinoX = tunel.origenX;
+                    this.tuneles[i].destinoY = tunel.origenY;
+                    tunel.destinoX = tunelGemelo.origenX;
+                    tunel.destinoY = tunelGemelo.origenY;
+                }
+                this.tuneles.push(tunel);
+                this.espacio.agregarCuerpoEstatico(tunel);
+                break;
             case "B":
                 this.base = new Bloque(imagenes.base, x, y);
                 this.base.y = this.base.y - this.base.alto / 2;
@@ -611,6 +650,15 @@ class GameLayer extends Layer {
 
     dibujar() {
         this.calcularScroll();
+        if(this.usadoTunelIzquierda){
+            this.scrollX = 285;
+            this.usadoTunelIzquierda = false;
+        }else if(this.usadoTunelDerecha){
+            this.scrollX = 2;
+            this.usadoTunelDerecha = false;
+        }
+        console.log(this.scrollX);
+        console.log(this.scrollY);
         this.fondo.dibujar();
         this.base.dibujar(this.scrollX, this.scrollY);
         for (var i = 0; i < this.minas.length; i++) {
@@ -655,6 +703,9 @@ class GameLayer extends Layer {
         this.jugador.dibujar(this.scrollX, this.scrollY);
         for (var i = 0; i < this.enemigos.length; i++) {
             this.enemigos[i].dibujar(this.scrollX, this.scrollY);
+        }
+        for(var i = 0; i < this.tuneles.length; i++){
+            this.tuneles[i].dibujar(this.scrollX, this.scrollY);
         }
     }
 
