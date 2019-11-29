@@ -38,19 +38,19 @@ class GameLayer extends Layer {
         this.espacio.actualizar();
 
         //Controlar el nivel en el que se está jugando
-        if(this.nivel == niveles.uno && this.enemigosEliminados == 0){
+        if(this.nivel == niveles.uno && this.enemigosEliminados == 8){
             console.log("Pasa a nivel 2");
             this.nivel = niveles.dos;
             this.enemigosRestantes = 8 * this.nivel;
             this.enemigosEliminados = 0;
             this.cargarMapa("res/0.txt");
-        } else if (this.nivel == niveles.dos && this.enemigosEliminados == 0){
+        } else if (this.nivel == niveles.dos && this.enemigosEliminados == 8*niveles.dos){
             console.log("Pasa a nivel 3");
             this.nivel = niveles.tres;
             this.enemigosRestantes = 8 * this.nivel;
             this.enemigosEliminados = 0;
             this.cargarMapa("res/0.txt");
-        } else if (this.nivel == niveles.tres && this.enemigosEliminados == 0){
+        } else if (this.nivel == niveles.tres && this.enemigosEliminados == 8*niveles.tres){
             console.log("Gana el juego");
         }
 
@@ -255,19 +255,18 @@ class GameLayer extends Layer {
                     if(this.enemigos[j] instanceof EnemigoMedio
                         && this.enemigos[j].vidas > 1) {
                         this.enemigos[j].vidas--;
-                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
+                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
                         reproducirEfecto(efectos.explosion);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
                     }else if (this.enemigos[j] instanceof EnemigoFuerte
-                        && !this.disparosJugador[i].colisionaPorArriba(this.enemigos[j])){
-                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
+                        && !this.jugador.disparoMejorado){
+                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
                         reproducirEfecto(efectos.golpeado);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
-
                     }else {
-                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i])
+                        this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
                         reproducirEfecto(efectos.explosion);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
@@ -438,6 +437,7 @@ class GameLayer extends Layer {
                     for(var j = 0; j < this.enemigos.length; j++){
                         this.espacio.eliminarCuerpoDinamico(this.enemigos[i]);
                         this.enemigos.splice(j, 1);
+                        this.enemigosEliminados++;
                         j = j - 1;
                     }
                     this.espacio.eliminarCuerpoDinamico(this.consumibleGranada[i]);
@@ -461,6 +461,7 @@ class GameLayer extends Layer {
                         this.espacio.eliminarCuerpoDinamico(this.minas[i]);
                         this.enemigos.splice(j, 1);
                         this.minas.splice(i, 1);
+                        this.enemigosEliminados++;
                         i = i - 1;
                         j = j - 1;
                     }
