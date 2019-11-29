@@ -259,7 +259,7 @@ class GameLayer extends Layer {
                         reproducirEfecto(efectos.explosion);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
-                    }else if (this. enemigos[j] instanceof EnemigoFuerte
+                    }else if (this.enemigos[j] instanceof EnemigoFuerte
                         && !this.jugador.disparoMejorado){
                         this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
                         reproducirEfecto(efectos.golpeado);
