@@ -3,6 +3,7 @@ class GameLayer extends Layer {
     constructor() {
         super();
         this.iniciar();
+        this.nivel = niveles.uno;
     }
 
     iniciar() {
@@ -28,35 +29,40 @@ class GameLayer extends Layer {
         this.disparosEnemigo = [];
         this.minas = [];
 
-        this.nivel = niveles.uno;
-        this.enemigosRestantes = 8 * this.nivel;
+        this.enemigosRestantes = 0;
         this.enemigosEliminados = 0;
         this.enemigos = [];
-        this.cargarMapa("res/0.txt");
+
+        if (this.nivel == niveles.dos) {
+            this.enemigosRestantes = 3 * 2;
+            this.cargarMapa("res/1.txt");
+        }else if (this.nivel == niveles.tres) {
+            this.enemigosRestantes = 3 * 3;
+            this.cargarMapa("res/0.txt")
+        } else {
+            this.enemigosRestantes = 3;
+            this.cargarMapa("res/0.txt")
+        }
     }
 
     actualizar() {
         this.espacio.actualizar();
 
         //Controlar el nivel en el que se está jugando
-        if(this.nivel == niveles.uno && this.enemigosEliminados == 8){
+        if(this.nivel == niveles.uno && this.enemigosEliminados == 3){
             console.log("Pasa a nivel 2");
             this.nivel = niveles.dos;
-            this.enemigosRestantes = 8 * this.nivel;
-            this.enemigosEliminados = 0;
-            this.cargarMapa("res/0.txt");
-        } else if (this.nivel == niveles.dos && this.enemigosEliminados == 8*niveles.dos){
+            this.iniciar();
+        } else if (this.nivel == niveles.dos && this.enemigosEliminados == 3*niveles.dos){
             console.log("Pasa a nivel 3");
             this.nivel = niveles.tres;
-            this.enemigosRestantes = 8 * this.nivel;
-            this.enemigosEliminados = 0;
-            this.cargarMapa("res/0.txt");
-        } else if (this.nivel == niveles.tres && this.enemigosEliminados == 8*niveles.tres){
+            this.iniciar();
+        } else if (this.nivel == niveles.tres && this.enemigosEliminados == 3*niveles.tres){
             console.log("Gana el juego");
         }
 
         //generar enemigos periódicos
-        if (this.iteracionesCrearEnemigo == null) {
+        if (this.iteracionesCrearEnemigo == null || this.iteracionesCrearEnemigo < 0) {
             this.iteracionesCrearEnemigo = 100;
         }
         this.iteracionesCrearEnemigo--;
@@ -273,6 +279,7 @@ class GameLayer extends Layer {
                         i = i - 1;
                         this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
                         this.enemigos.splice(j, 1);
+                        this.enemigosEliminados++;
                         j = j - 1;
                     }
                 }

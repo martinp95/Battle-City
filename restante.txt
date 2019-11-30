@@ -4,3 +4,5 @@
 4- Mostrar invulnerabilidad
 6- Ajustar CDs de los consumibles y de los respawns de los enemigos
 7- Pantalla de inicio
+8- Disparos de enemigos direccionales
+9- Zona de spawn o niveles con más espacios vacíos, no se crean enemigos en nivel 2

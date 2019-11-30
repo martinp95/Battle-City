@@ -17,6 +17,7 @@ var imagenes = {
     jugador_idle_arriba : "res/jugador_idle_arriba.png",
     jugador_idle_izquierda : "res/jugador_idle_izquierda.png",
     jugador_idle_derecha : "res/jugador_idle_derecha.png",
+    enemigo_aparece: "res/enemigo_aparece.png",
     enemigo_idle_abajo : "res/enemigo_idle_abajo.png",
     enemigo_idle_arriba : "res/enemigo_idle_arriba.png",
     enemigo_idle_izquierda : "res/enemigo_idle_izquierda.png",

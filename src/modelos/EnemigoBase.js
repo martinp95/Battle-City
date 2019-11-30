@@ -7,6 +7,8 @@ class EnemigoBase extends Modelo {
         this.vy = 0;
         this.vx = 1;
 
+        this.apareciendo = new Animacion(imagenes.enemigo_aparece,
+            this.ancho, this.alto, 6, 4, this.finAnimacionAparecer.bind(this));
         this.aIdleArriba = new Animacion(animacion_arriba,
             this.ancho, this.alto, 3, 2);
         this.aIdleAbajo = new Animacion(animacion_abajo,
@@ -15,7 +17,7 @@ class EnemigoBase extends Modelo {
             this.ancho, this.alto, 3, 2);
         this.aIdleDerecha = new Animacion(animacion_derecha,
             this.ancho, this.alto, 3, 2);
-        this.animacion = this.aIdleIzquierda;
+        this.animacion = this.apareciendo;
 
         // Disparo
         this.cadenciaDisparo = 60;
@@ -24,10 +26,20 @@ class EnemigoBase extends Modelo {
         //IA dirección
         this.recalculadoDireccion = 300;
         this.tiempoRecalculadoDireccion = 0;
+        this.estado = estados.apareciendo;
     }
 
     actualizar (){
         this.animacion.actualizar();
+
+        if(this.estado == estados.apareciendo){
+            this.vx = 0;
+            this.vy = 0;
+        } else {
+            if(this.vx == 0 && this.vy == 0) {
+                this.calcularIA()
+            }
+        }
 
         // Establecer orientación
         if ( this.vx > 0 ){
@@ -118,6 +130,10 @@ class EnemigoBase extends Modelo {
 
     dibujar(scrollX, scrollY) {
         this.animacion.dibujar(this.x - scrollX, this.y - scrollY);
+    }
+
+    finAnimacionAparecer(){
+        this.estado = estados.moviendo;
     }
 
 }

@@ -4,6 +4,7 @@ estados.muriendo = 3;
 estados.muerto = 4;
 estados.disparando = 5;
 estados.impactado = 6;
+estados.apareciendo = 7;
 
 var orientaciones = {};
 orientaciones.derecha = 2;
