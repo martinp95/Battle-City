@@ -107,7 +107,7 @@ class EnemigoBase extends Modelo {
     }
 
     disparar(){
-        if ( this.tiempoDisparo == 0) {
+        if ( this.tiempoDisparo == 0 && this.estado != estados.apareciendo) {
             // reiniciar Cadencia
             this.tiempoDisparo = this.cadenciaDisparo;
             var disparo = null;
@@ -117,10 +117,13 @@ class EnemigoBase extends Modelo {
             }else if (this.orientacion == orientaciones.derecha){
                 disparo = new DisparoEnemigo(imagenes.disparo_jugador_derecha, this.x, this.y);
             }else if( this.orientacion == orientaciones.arriba){
-                disparo = new DisparoEnemigo(imagenes.disparo_jugador_arriba, this.x, this.y,true);
-                disparo.vy = disparo.vy * -1;
+                disparo = new DisparoEnemigo(imagenes.disparo_jugador_arriba, this.x, this.y, true);
+                disparo.vy = disparo.vx * -1;
+                disparo.vx = 0;
             }else if (this.orientacion == orientaciones.abajo){
-                disparo = new DisparoEnemigo(imagenes.disparo_jugador_abajo, this.x, this.y,true);
+                disparo = new DisparoEnemigo(imagenes.disparo_jugador_abajo, this.x, this.y, true);
+                disparo.vy = disparo.vx;
+                disparo.vx = 0;
             }
             return disparo;
         } else {
