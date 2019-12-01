@@ -57,7 +57,7 @@ class GameLayer extends Layer {
     }
 
     actualizar() {
-        this.espacio.actualizar();
+
 
         //Controlar el nivel en el que se está jugando
         if(this.nivel == niveles.uno
@@ -554,6 +554,8 @@ class GameLayer extends Layer {
         this.textoVidas.valor = this.jugador.vidas;
         this.textoMinasRestantes.valor = this.jugador.minas;
         this.textoEnemigosRestantes.valor = this.enemigosRestantes;
+
+        this.espacio.actualizar();
     }
 
     cargarMapa(ruta) {
