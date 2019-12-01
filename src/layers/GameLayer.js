@@ -23,7 +23,14 @@ class GameLayer extends Layer {
         this.consumibleGranada = [];
         this.consumiblePropulsion = [];
         this.consumibleInvulnerabilidad = [];
+
         this.fondo = new Fondo(imagenes.fondo, 480 * 0.5, 320 * 0.5);
+        this.fondoEnemigosRestantes = new Fondo(imagenes.fondo_enemigos_restantes, 480*0.92,320*0.03)
+        this.textoEnemigosRestantes = new Texto(0,480*0.95,320*0.05 );
+        this.fondoVidas = new Fondo(imagenes.fondo_vidas,480*0.82,320*0.03)
+        this.textoVidas = new Texto(0,480*0.85,320*0.05 );
+        this.fondoMinasRestantes = new Fondo(imagenes.fondo_minas_restantes, 480*0.72,320*0.03);
+        this.textoMinasRestantes = new Texto(0,480*0.75,320*0.05 );
 
         this.disparosJugador = [];
         this.disparosEnemigo = [];
@@ -35,14 +42,18 @@ class GameLayer extends Layer {
 
         if (this.nivel == niveles.dos) {
             this.enemigosRestantes = 3 * 2;
+            this.textoEnemigosRestantes.valor = this.enemigosRestantes;
             this.cargarMapa("res/1.txt");
         }else if (this.nivel == niveles.tres) {
             this.enemigosRestantes = 3 * 3;
-            this.cargarMapa("res/0.txt")
+            this.textoEnemigosRestantes.valor = this.enemigosRestantes;
+            this.cargarMapa("res/2.txt")
         } else {
             this.enemigosRestantes = 3;
+            this.textoEnemigosRestantes.valor = this.enemigosRestantes;
             this.cargarMapa("res/0.txt")
         }
+        this.textoVidas.valor = this.jugador.vidas
     }
 
     actualizar() {
@@ -356,6 +367,7 @@ class GameLayer extends Layer {
 
                 if (this.consumibleVidaExtra[i].colisiona(this.jugador)) {
                     this.jugador.vidas++;
+
                     this.espacio.eliminarCuerpoDinamico(this.consumibleVidaExtra[i]);
                     this.consumibleVidaExtra.splice(i, 1);
                 }
@@ -528,6 +540,11 @@ class GameLayer extends Layer {
                  }
              }
          }*/
+
+        //HUD actualizacion
+        this.textoVidas.valor = this.jugador.vidas;
+        this.textoMinasRestantes.valor = this.jugador.minas;
+        this.textoEnemigosRestantes.valor = this.enemigosRestantes;
     }
 
     cargarMapa(ruta) {
@@ -714,6 +731,14 @@ class GameLayer extends Layer {
         for(var i = 0; i < this.tuneles.length; i++){
             this.tuneles[i].dibujar(this.scrollX, this.scrollY);
         }
+
+        // HUD
+        this.fondoEnemigosRestantes.dibujar();
+        this.textoEnemigosRestantes.dibujar();
+        this.fondoVidas.dibujar();
+        this.textoVidas.dibujar();
+        this.fondoMinasRestantes.dibujar();
+        this.textoMinasRestantes.dibujar();
     }
 
     procesarControles() {

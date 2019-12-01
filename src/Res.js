@@ -44,6 +44,9 @@ var imagenes = {
     consumible_invulnerabilidad : "res/consumible_invulnerabilidad.png",
     mina : "res/mina.png",
     tunel : "res/tunel.png",
+    fondo_enemigos_restantes: "res/enemigos_restantes.png",
+    fondo_vidas: "res/vidas.png",
+    fondo_minas_restantes: "res/minas_restantes.png"
 };
 
 var rutasImagenes = Object.values(imagenes);
