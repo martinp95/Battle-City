@@ -19,16 +19,11 @@ function iniciarJuego() {
     setInterval(loop, 1000 / 30);
 }
 
-function loop() {
+function loop(){
     console.log("loop - ");
     layer.actualizar();
-    if (entrada == entradas.pulsaciones) {
-        layer.calcularPulsaciones(pulsaciones);
-    }
     layer.procesarControles();
     layer.dibujar();
-
-    actualizarPulsaciones();
 }
 
 // Cambio de escalado

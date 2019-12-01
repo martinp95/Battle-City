@@ -55,7 +55,8 @@ var imagenes = {
     tunel : "res/tunel.png",
     fondo_enemigos_restantes: "res/enemigos_restantes.png",
     fondo_vidas: "res/vidas.png",
-    fondo_minas_restantes: "res/minas_restantes.png"
+    fondo_minas_restantes: "res/minas_restantes.png",
+    menu_fondo : "res/menu_fondo.png",
 };
 
 var rutasImagenes = Object.values(imagenes);
