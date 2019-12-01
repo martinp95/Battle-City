@@ -61,11 +61,9 @@ class GameLayer extends Layer {
 
         //Controlar el nivel en el que se está jugando
         if(this.nivel == niveles.uno && this.enemigosEliminados == 3){
-            console.log("Pasa a nivel 2");
             this.nivel = niveles.dos;
             this.iniciar();
         } else if (this.nivel == niveles.dos && this.enemigosEliminados == 3*niveles.dos){
-            console.log("Pasa a nivel 3");
             this.nivel = niveles.tres;
             this.iniciar();
         } else if (this.nivel == niveles.tres && this.enemigosEliminados == 3*niveles.tres){
@@ -104,7 +102,7 @@ class GameLayer extends Layer {
                 this.espacio.agregarCuerpoDinamico(nuevoEnemigo);
                 this.enemigosRestantes--;
             }
-            this.iteracionesCrearEnemigo = 100;
+            this.iteracionesCrearEnemigo = 200;
         }
 
         //generar consumibleVidaExtra
@@ -124,7 +122,7 @@ class GameLayer extends Layer {
 
         //generar consumibleMina
         if (this.iteracionesCrearConsumibleMina == null) {
-            this.iteracionesCrearConsumibleMina = 0;
+            this.iteracionesCrearConsumibleMina = 300;
         }
         this.iteracionesCrearConsumibleMina--;
         if (this.iteracionesCrearConsumibleMina < 0) {
@@ -134,7 +132,7 @@ class GameLayer extends Layer {
             consumible.y = consumible.y - consumible.alto / 2;
             this.consumibleMina.push(consumible);
             this.espacio.agregarCuerpoDinamico(consumible);
-            this.iteracionesCrearConsumibleMina = 3000;
+            this.iteracionesCrearConsumibleMina = 500;
         }
 
         //generar consumibleDisparo
@@ -149,12 +147,12 @@ class GameLayer extends Layer {
             consumible.y = consumible.y - consumible.alto / 2;
             this.consumibleDisparo.push(consumible);
             this.espacio.agregarCuerpoDinamico(consumible);
-            this.iteracionesCrearConsumibleDisparo = 3000;
+            this.iteracionesCrearConsumibleDisparo = 200;
         }
 
         //generar ConsumibleGranada
         if(this.iteracionesCrearConsumibleGranada == null){
-            this.iteracionesCrearConsumibleGranada = 0;
+            this.iteracionesCrearConsumibleGranada = 500;
         }
         this.iteracionesCrearConsumibleGranada--;
         if(this.iteracionesCrearConsumibleGranada < 0){
@@ -169,7 +167,7 @@ class GameLayer extends Layer {
 
         //generar ConsumiblePropulsion
         if(this.iteracionesCrearConsumiblePropulsion == null){
-            this.iteracionesCrearConsumiblePropulsion = 0;
+            this.iteracionesCrearConsumiblePropulsion = 100;
         }
         this.iteracionesCrearConsumiblePropulsion--;
         if(this.iteracionesCrearConsumiblePropulsion < 0){
@@ -179,12 +177,12 @@ class GameLayer extends Layer {
             consumible.y = consumible.y - consumible.alto / 2;
             this.espacio.agregarCuerpoDinamico(consumible);
             this.consumiblePropulsion.push(consumible);
-            this.iteracionesCrearConsumiblePropulsion = 3000;
+            this.iteracionesCrearConsumiblePropulsion = 300;
         }
 
         //generar consumibleInvulnerabilidad
         if(this.iteracionesCrearConsumibleInvulnerabilidad == null){
-            this.iteracionesCrearConsumibleInvulnerabilidad = 0;
+            this.iteracionesCrearConsumibleInvulnerabilidad = 300;
         }
         this.iteracionesCrearConsumibleInvulnerabilidad--;
         if(this.iteracionesCrearConsumibleInvulnerabilidad < 0){
@@ -194,7 +192,7 @@ class GameLayer extends Layer {
             consumible.y = consumible.y - consumible.alto / 2;
             this.espacio.agregarCuerpoDinamico(consumible);
             this.consumibleInvulnerabilidad.push(consumible);
-            this.iteracionesCrearConsumibleInvulnerabilidad = 3000;
+            this.iteracionesCrearConsumibleInvulnerabilidad = 3050;
         }
 
         // Eliminar disparosJugador sin velocidad
@@ -529,18 +527,6 @@ class GameLayer extends Layer {
             }
         }
 
-        /*Falla no se puede probar aun // colisiones disparoEnemigo - disparoJugador
-         for (var i = 0; i < this.disparosEnemigo.length; i++){
-             for (var j = 0; i < this.disparosJugador.length; j++){
-                 if(this.disparosEnemigo[i].colisiona(this.disparosJugador[j])){
-                     this.disparosJugador.splice(j,1);
-                     j = j-1;
-                     this.disparosEnemigo.splice(i, 1);
-                     i = i-1;
-                 }
-             }
-         }*/
-
         //HUD actualizacion
         this.textoVidas.valor = this.jugador.vidas;
         this.textoMinasRestantes.valor = this.jugador.minas;
@@ -681,8 +667,6 @@ class GameLayer extends Layer {
             this.scrollX = 2;
             this.usadoTunelDerecha = false;
         }
-        console.log(this.scrollX);
-        console.log(this.scrollY);
         this.fondo.dibujar();
         this.base.dibujar(this.scrollX, this.scrollY);
         for (var i = 0; i < this.minas.length; i++) {

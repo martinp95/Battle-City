@@ -2,9 +2,10 @@
 2- Mostrar vidas del jugador - HECHO
 3- Mostrar Minas del jugador - HECHO
 4- Mostrar invulnerabilidad
-6- Ajustar CDs de los consumibles y de los spawns de los enemigos
+6- Ajustar CDs de los consumibles y de los spawns de los enemigos - hECHO
 7- Pantalla de inicio
 8- Disparos de enemigos direccionales - HECHO
 9- Zona de spawn o niveles con más espacios vacíos, no se crean casi enemigos en nivel 2
 10- Animación muerte de los enemigos
 11- Mapa 3 - HECHO
+12- Poner enemigos como estaticos para que el jugador no pueda pasar por encima de ellos?
