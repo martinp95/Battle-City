@@ -587,18 +587,21 @@ class GameLayer extends Layer {
                 enemigo.y = enemigo.y - enemigo.alto / 2;
                 this.enemigos.push(enemigo);
                 this.espacio.agregarCuerpoDinamico(enemigo);
+                this.enemigosRestantes--;
                 break;
             case "M":
                 var enemigoMedio = new EnemigoMedio(x,y);
                 enemigoMedio.y = enemigoMedio.y - enemigoMedio.alto / 2;
                 this.enemigos.push(enemigoMedio);
                 this.espacio.agregarCuerpoDinamico(enemigoMedio);
+                this.enemigosRestantes--;
                 break;
             case "F":
                 var enemigoFuerte = new EnemigoFuerte(x,y);
                 enemigoFuerte.y = enemigoFuerte.y - enemigoFuerte.alto / 2;
                 this.enemigos.push(enemigoFuerte);
                 this.espacio.agregarCuerpoDinamico(enemigoFuerte);
+                this.enemigosRestantes--;
                 break;
             case "J":
                 this.jugador = new Jugador(x, y);
