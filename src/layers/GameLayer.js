@@ -182,7 +182,7 @@ class GameLayer extends Layer {
 
         //generar consumibleInvulnerabilidad
         if(this.iteracionesCrearConsumibleInvulnerabilidad == null){
-            this.iteracionesCrearConsumibleInvulnerabilidad = 300;
+            this.iteracionesCrearConsumibleInvulnerabilidad = 0;
         }
         this.iteracionesCrearConsumibleInvulnerabilidad--;
         if(this.iteracionesCrearConsumibleInvulnerabilidad < 0){

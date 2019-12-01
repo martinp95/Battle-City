@@ -23,6 +23,25 @@ class Jugador extends Modelo {
             this.ancho, this.alto, 1, 1);
         this.aParadoIzquierda = new Animacion(imagenes.jugador_parado_izquierda,
             this.ancho, this.alto, 1, 1);
+
+        //escudo
+        // Animaciones
+        this.aIdleAbajoEscudo = new Animacion(imagenes.jugador_idle_abajo_escudo,
+            this.ancho, this.alto, 3, 2);
+        this.aIdleArribaEscudo = new Animacion(imagenes.jugador_idle_arriba_escudo,
+            this.ancho, this.alto, 3, 2);
+        this.aIdleIzquierdaEscudo = new Animacion(imagenes.jugador_idle_izquierda_escudo,
+            this.ancho, this.alto, 3, 2);
+        this.aIdleDerechaEscudo = new Animacion(imagenes.jugador_idle_derecha_escudo,
+            this.ancho, this.alto, 3, 2);
+        this.aParadoAbajoEscudo = new Animacion(imagenes.jugador_parado_abajo_escudo,
+            this.ancho, this.alto, 1, 1);
+        this.aParadoArribaEscudo = new Animacion(imagenes.jugador_parado_arriba_escudo,
+            this.ancho, this.alto, 1, 1);
+        this.aParadoDerechaEscudo = new Animacion(imagenes.jugador_parado_derecha_escudo,
+            this.ancho, this.alto, 1, 1);
+        this.aParadoIzquierdaEscudo = new Animacion(imagenes.jugador_parado_izquierda_escudo,
+            this.ancho, this.alto, 1, 1);
         this.animacion = this.aIdleArriba;
 
         // Disparo
@@ -69,32 +88,64 @@ class Jugador extends Modelo {
         //Seleccion de animacion
         if (this.vx != 0) {
             if (this.orientacion == orientaciones.derecha) {
-                this.animacion = this.aIdleDerecha;
+                if(this.invulnerable){
+                    this.animacion = this.aIdleDerechaEscudo;
+                }else {
+                    this.animacion = this.aIdleDerecha;
+                }
             }
             if (this.orientacion == orientaciones.izquierda) {
-                this.animacion = this.aIdleIzquierda;
+                if(this.invulnerable){
+                    this.animacion = this.aIdleIzquierdaEscudo;
+                }else {
+                    this.animacion = this.aIdleIzquierda;
+                }
             }
         }
         if (this.vy != 0) {
             if (this.orientacion == orientaciones.abajo) {
-                this.animacion = this.aIdleAbajo;
+                if(this.invulnerable){
+                    this.animacion = this.aIdleAbajoEscudo;
+                }else{
+                    this.animacion = this.aIdleAbajo;
+                }
             }
             if (this.orientacion == orientaciones.arriba) {
-                this.animacion = this.aIdleArriba;
+                if(this.invulnerable){
+                    this.animacion = this.aIdleArribaEscudo;
+                }else{
+                    this.animacion = this.aIdleArriba;
+                }
             }
         }
         if (this.vx == 0 && this.vy == 0) {
             if (this.orientacion == orientaciones.abajo) {
-                this.animacion = this.aParadoAbajo;
+                if(this.invulnerable){
+                    this.animacion = this.aParadoAbajoEscudo;
+                }else{
+                    this.animacion = this.aParadoAbajo;
+                }
             }
             if (this.orientacion == orientaciones.arriba) {
-                this.animacion = this.aParadoArriba;
+                if(this.invulnerable){
+                    this.animacion = this.aParadoArribaEscudo;
+                }else{
+                    this.animacion = this.aParadoArriba;
+                }
             }
             if (this.orientacion == orientaciones.derecha) {
-                this.animacion = this.aParadoDerecha;
+                if(this.invulnerable){
+                    this.animacion = this.aParadoDerechaEscudo;
+                }else{
+                    this.animacion = this.aParadoDerecha;
+                }
             }
             if (this.orientacion == orientaciones.izquierda) {
-                this.animacion = this.aParadoIzquierda;
+                if(this.invulnerable){
+                    this.animacion = this.aParadoIzquierdaEscudo;
+                }else{
+                    this.animacion = this.aParadoIzquierda;
+                }
             }
         }
         // Tiempo Disparo
