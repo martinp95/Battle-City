@@ -4,22 +4,26 @@ var contexto = canvas.getContext("2d");
 var escaladoMinimo = 1;
 
 // Capas
+var layer;
 var gameLayer;
+var menuLayer;
+
 
 // Controles
 var controles = {};
 
 // Inicio capas y bucle del juego
 function iniciarJuego() {
-    gameLayer = new GameLayer();
+    menuLayer = new MenuLayer();
+    layer = menuLayer;
     setInterval(loop, 1000 / 30);
 }
 
 function loop(){
     console.log("loop - ");
-    gameLayer.actualizar();
-    gameLayer.procesarControles();
-    gameLayer.dibujar();
+    layer.actualizar();
+    layer.procesarControles();
+    layer.dibujar();
 }
 
 // Cambio de escalado
