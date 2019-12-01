@@ -17,6 +17,8 @@ class EnemigoBase extends Modelo {
             this.ancho, this.alto, 3, 2);
         this.aIdleDerecha = new Animacion(animacion_derecha,
             this.ancho, this.alto, 3, 2);
+        this.muriendo = new Animacion(imagenes.enemigo_muriendo,
+            this.ancho, this.alto, 3, 3, this.finAnimacionMorir.bind(this));
         this.animacion = this.apareciendo;
 
         // Disparo
@@ -32,9 +34,13 @@ class EnemigoBase extends Modelo {
     actualizar (){
         this.animacion.actualizar();
 
-        if(this.estado == estados.apareciendo){
+        if(this.estado == estados.apareciendo
+            || this.estado == estados.muriendo){
             this.vx = 0;
-            this.vy = 0;
+            this.vy = 0
+            if(this.estado == estados.muriendo){
+                this.animacion = this.muriendo;
+            }
         } else {
             if(this.vx == 0 && this.vy == 0) {
                 this.calcularIA()
@@ -135,8 +141,19 @@ class EnemigoBase extends Modelo {
         this.animacion.dibujar(this.x - scrollX, this.y - scrollY);
     }
 
+
+    impactado(){
+        if ( this.estado != estados.muriendo ){
+            this.estado = estados.muriendo;
+        }
+    }
+
     finAnimacionAparecer(){
         this.estado = estados.moviendo;
+    }
+
+    finAnimacionMorir(){
+        this.estado = estados.muerto
     }
 
 }

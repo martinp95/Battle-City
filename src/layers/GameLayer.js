@@ -60,15 +60,21 @@ class GameLayer extends Layer {
         this.espacio.actualizar();
 
         //Controlar el nivel en el que se está jugando
-        if(this.nivel == niveles.uno && this.enemigosEliminados == 3){
+        if(this.nivel == niveles.uno
+            && this.enemigosEliminados == 3
+            && this.enemigosRestantes == 0){
             console.log("Pasa a nivel 2");
             this.nivel = niveles.dos;
             this.iniciar();
-        } else if (this.nivel == niveles.dos && this.enemigosEliminados == 3*niveles.dos){
+        } else if (this.nivel == niveles.dos
+            && this.enemigosEliminados == 3*niveles.dos
+            && this.enemigosRestantes == 0){
             console.log("Pasa a nivel 3");
             this.nivel = niveles.tres;
             this.iniciar();
-        } else if (this.nivel == niveles.tres && this.enemigosEliminados == 3*niveles.tres){
+        } else if (this.nivel == niveles.tres
+            && this.enemigosEliminados == 3*niveles.tres
+            && this.enemigosRestantes == 0){
             console.log("Gana el juego");
         }
 
@@ -288,12 +294,20 @@ class GameLayer extends Layer {
                         reproducirEfecto(efectos.explosion);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
-                        this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
-                        this.enemigos.splice(j, 1);
                         this.enemigosEliminados++;
-                        j = j - 1;
+                        this.enemigos[j].impactado()
                     }
                 }
+            }
+        }
+
+        // Enemigos muertos fuera del juego
+        for (var j=0; j < this.enemigos.length; j++){
+            if ( this.enemigos[j] != null &&
+                this.enemigos[j].estado == estados.muerto  ) {
+                this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
+                this.enemigos.splice(j, 1);
+                j = j-1;
             }
         }
 
