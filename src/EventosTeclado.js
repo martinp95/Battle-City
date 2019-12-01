@@ -15,15 +15,19 @@ function onKeyDown( event) {
                 break;
             case 38:
                 controles.moverY = 1;
+                controles.moverX = 0;
                 break;
             case 40:
                 controles.moverY = -1;
+                controles.moverX = 0;
                 break;
             case 39:
                 controles.moverX = 1;
+                controles.moverY = 0;
                 break;
             case 37:
                 controles.moverX = -1;
+                controles.moverY = 0;
                 break;
             case 77:
                 controles.plantarMina = true;
