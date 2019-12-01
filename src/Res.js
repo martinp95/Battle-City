@@ -26,6 +26,7 @@ var imagenes = {
     jugador_idle_izquierda_escudo : "res/jugador_idle_izquierda_escudo.png",
     jugador_idle_derecha_escudo : "res/jugador_idle_derecha_escudo.png",
     enemigo_aparece: "res/enemigo_aparece.png",
+    enemigo_muriendo: "res/bullet_explosion.png",
     enemigo_idle_abajo : "res/enemigo_idle_abajo.png",
     enemigo_idle_arriba : "res/enemigo_idle_arriba.png",
     enemigo_idle_izquierda : "res/enemigo_idle_izquierda.png",

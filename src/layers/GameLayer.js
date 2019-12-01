@@ -60,13 +60,21 @@ class GameLayer extends Layer {
         this.espacio.actualizar();
 
         //Controlar el nivel en el que se está jugando
-        if(this.nivel == niveles.uno && this.enemigosEliminados == 3){
+        if(this.nivel == niveles.uno
+            && this.enemigosEliminados == 3
+            && this.enemigosRestantes == 0){
+            console.log("Pasa a nivel 2");
             this.nivel = niveles.dos;
             this.iniciar();
-        } else if (this.nivel == niveles.dos && this.enemigosEliminados == 3*niveles.dos){
+        } else if (this.nivel == niveles.dos
+            && this.enemigosEliminados == 3*niveles.dos
+            && this.enemigosRestantes == 0){
+            console.log("Pasa a nivel 3");
             this.nivel = niveles.tres;
             this.iniciar();
-        } else if (this.nivel == niveles.tres && this.enemigosEliminados == 3*niveles.tres){
+        } else if (this.nivel == niveles.tres
+            && this.enemigosEliminados == 3*niveles.tres
+            && this.enemigosRestantes == 0){
             console.log("Gana el juego");
         }
 
@@ -272,7 +280,7 @@ class GameLayer extends Layer {
                         && this.enemigos[j].vidas > 1) {
                         this.enemigos[j].vidas--;
                         this.espacio.eliminarCuerpoDinamico(this.disparosJugador[i]);
-                        reproducirEfecto(efectos.explosion);
+                        reproducirEfecto(efectos.golpeado);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
                     }else if (this.enemigos[j] instanceof EnemigoFuerte
@@ -286,12 +294,20 @@ class GameLayer extends Layer {
                         reproducirEfecto(efectos.explosion);
                         this.disparosJugador.splice(i, 1);
                         i = i - 1;
-                        this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
-                        this.enemigos.splice(j, 1);
                         this.enemigosEliminados++;
-                        j = j - 1;
+                        this.enemigos[j].impactado()
                     }
                 }
+            }
+        }
+
+        // Enemigos muertos fuera del juego
+        for (var j=0; j < this.enemigos.length; j++){
+            if ( this.enemigos[j] != null &&
+                this.enemigos[j].estado == estados.muerto  ) {
+                this.espacio.eliminarCuerpoDinamico(this.enemigos[j]);
+                this.enemigos.splice(j, 1);
+                j = j-1;
             }
         }
 
@@ -365,9 +381,9 @@ class GameLayer extends Layer {
 
                 if (this.consumibleVidaExtra[i].colisiona(this.jugador)) {
                     this.jugador.vidas++;
-
                     this.espacio.eliminarCuerpoDinamico(this.consumibleVidaExtra[i]);
                     this.consumibleVidaExtra.splice(i, 1);
+                    reproducirEfecto(efectos.consumible_recogido);
                 }
             } else {
                 this.espacio.eliminarCuerpoDinamico(this.consumibleVidaExtra[i]);
@@ -383,6 +399,7 @@ class GameLayer extends Layer {
                     this.jugador.minas = 3;
                     this.espacio.eliminarCuerpoDinamico(this.consumibleMina[i]);
                     this.consumibleMina.splice(i, 1);
+                    reproducirEfecto(efectos.consumible_recogido);
                     i = i - 1;
                 }
             } else {
@@ -401,6 +418,7 @@ class GameLayer extends Layer {
                     this.jugador.reiniciarTiempoDisparoMejorado();
                     this.espacio.eliminarCuerpoDinamico(this.consumibleDisparo[i]);
                     this.consumibleDisparo.splice(i, 1);
+                    reproducirEfecto(efectos.consumible_recogido);
                     i = i - 1;
                 }
             }else{
@@ -419,6 +437,7 @@ class GameLayer extends Layer {
                     this.jugador.reiniciarTiempoPropulsion();
                     this.espacio.eliminarCuerpoDinamico(this.consumiblePropulsion[i]);
                     this.consumiblePropulsion.splice(i, 1);
+                    reproducirEfecto(efectos.consumible_recogido);
                     i = i - 1;
                 }
             }else{
@@ -437,6 +456,7 @@ class GameLayer extends Layer {
                     this.jugador.reiniciarTiempoInvulnerable();
                     this.espacio.eliminarCuerpoDinamico(this.consumibleInvulnerabilidad[i]);
                     this.consumibleInvulnerabilidad.splice(i, 1);
+                    reproducirEfecto(efectos.consumible_recogido);
                     i = i - 1;
                 }
             }else{
@@ -460,6 +480,7 @@ class GameLayer extends Layer {
                     }
                     this.espacio.eliminarCuerpoDinamico(this.consumibleGranada[i]);
                     this.consumibleGranada.splice(i, 1);
+                    reproducirEfecto(efectos.explosion_grande);
                     i = i - 1;
                 }
             }else{
@@ -480,6 +501,7 @@ class GameLayer extends Layer {
                         this.enemigos.splice(j, 1);
                         this.minas.splice(i, 1);
                         this.enemigosEliminados++;
+                        reproducirEfecto(efectos.explosion_grande);
                         i = i - 1;
                         j = j - 1;
                     }
@@ -499,6 +521,7 @@ class GameLayer extends Layer {
                     }
                     this.espacio.eliminarCuerpoDinamico(this.minas[i]);
                     this.minas.splice(i, 1);
+                    reproducirEfecto(efectos.explosion_grande);
                     i = i - 1;
                 }
             }
