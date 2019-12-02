@@ -369,7 +369,7 @@ class GameLayer extends Layer {
         for (var i = 0; i < this.bloquesAgua.length; i++) {
             if (this.jugador.colisiona(this.bloquesAgua[i])) {
                 this.jugador.slow = true;
-                this.jugador.tiempoSlow = 120;
+                this.jugador.tiempoSlow = 60;
             }
         }
 
